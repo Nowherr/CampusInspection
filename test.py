@@ -13,7 +13,7 @@ from datasets.CamVid_dataloader11 import *
 def parse_arguments():
     parser = argparse.ArgumentParser()
     parser.add_argument('--image_dir', type=str, default='./datasets/test', help='Input image or folder')
-    parser.add_argument('--checkpoint', type=str, default='./checkpoint/segnet_best_0.001420938889169529.pth', help='Checkpoint path')
+    parser.add_argument('--checkpoint', type=str, default='./checkpoint/segnet_best.pth', help='Checkpoint path')
     parser.add_argument('--model', type=str, default='segnet', help='Segmentation head')
     parser.add_argument('--num_classes', type=int, default=12, help='Number of classes')
     parser.add_argument('--save_dir', type=str, default='./predictions', help='Directory to save results')
