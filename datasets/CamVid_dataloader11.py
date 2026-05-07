@@ -5,7 +5,7 @@ from albumentations.pytorch.transforms import ToTensorV2
 from torch.utils.data import Dataset, DataLoader
 import numpy as np
 import torch
-# 11类
+# 12类
 Cam_CLASSES = [ "Unlabelled","Sky","Building","Pole",
                 "Road","Sidewalk", "Tree","SignSymbol",
                 "Fence","Car","Pedestrian","Bicyclist"]
@@ -36,7 +36,7 @@ class CamVidDataset(Dataset):
         self.transform = A.Compose([
             A.Resize(224, 224),
             A.HorizontalFlip(),
-            A.VerticalFlip(),
+            # A.VerticalFlip(),
             A.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225], max_pixel_value=255.0),
             ToTensorV2(),
         ])
@@ -51,10 +51,16 @@ class CamVidDataset(Dataset):
 
     def __getitem__(self, idx):
         img_path = os.path.join(self.image_dir, self.images[idx])
-        label_path = os.path.join(self.label_dir, self.labels[idx])
-
         image = np.array(Image.open(img_path).convert("RGB"))
+        # 打印图像完整路径
+        # print(f"图像完整路径: {img_path}")
+
+        #label_name = self.images[idx].replace(".png", "_L.png")
+        #label_path = os.path.join(self.label_dir, label_name)
+        label_path = os.path.join(self.label_dir, self.labels[idx])
         label_rgb = np.array(Image.open(label_path).convert("RGB"))
+        # 打印标签完整路径
+        # print(f"标签完整路径: {label_path}")
 
         # RGB转类别索引
         mask = mask_to_class(label_rgb)

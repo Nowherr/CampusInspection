@@ -43,12 +43,16 @@ def train(args):
     model = get_model(num_classes=args.num_classes)
     model.to(device)
 
+
+
     # Loss + Optimizer + Scheduler
     criterion = nn.CrossEntropyLoss(ignore_index=0)
+
+
     #optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
     optimizer = torch.optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.1)
-    # ★ 已移除 AMP：不再创建 GradScaler，改为纯 FP32 训练
+    # scaler = torch.amp.GradScaler('cuda')   # ★ 关掉 AMP，注释此行
 
     # Resume
     start_epoch = 0
@@ -75,27 +79,54 @@ def train(args):
     for epoch in range(start_epoch, args.epochs):
         model.train()
         train_loss = 0.0
+        valid_samples = 0      # ★ 记录真正参与 loss 平均的样本数
+        nan_batches = 0        # ★ 记录本 epoch 出现了多少个 NaN batch
         t0 = time.time()
-        for images, masks in tqdm(train_loader, desc=f'Epoch {epoch+1}/{args.epochs} [Train]'):
+
+        for batch_idx, (images, masks) in enumerate(tqdm(train_loader, desc=f'Epoch {epoch+1}/{args.epochs} [Train]')):
             images = images.to(device)
             masks = masks.to(device)
 
             optimizer.zero_grad()
 
-            # ★ 已移除 AMP：去掉 autocast，用纯 FP32 前向
+            # ★ 关掉 autocast，用普通 fp32 前向
             outputs = model(images)
             loss = criterion(outputs, masks)
 
-            # ★ 已移除 AMP：去掉 scaler 三连，用普通反向传播 + 更新
+            # ★ 前 3 个 batch 打印 logits 范围和 mask 类别，用于诊断
+            if epoch == start_epoch and batch_idx < 3:
+                print(f"\n[debug] batch {batch_idx}: "
+                      f"logits=[{outputs.min().item():.3f}, {outputs.max().item():.3f}], "
+                      f"loss={loss.item():.4f}, "
+                      f"mask classes={torch.unique(masks).tolist()}")
+
+            # ★ NaN/Inf 防守：出现异常就跳过这个 batch，不破坏模型权重
+            if torch.isnan(loss) or torch.isinf(loss):
+                nan_batches += 1
+                print(f"\n⚠️ NaN/Inf loss at batch {batch_idx}! "
+                      f"logits=[{outputs.min().item():.3f}, {outputs.max().item():.3f}], "
+                      f"mask classes={torch.unique(masks).tolist()}")
+                optimizer.zero_grad()
+                continue
+
             loss.backward()
+
+            # ★ 梯度裁剪，防止梯度爆炸
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+
             optimizer.step()
 
             train_loss += loss.item() * images.size(0)
+            valid_samples += images.size(0)
 
-        train_loss /= train_dataset_size
+        # ★ 用有效样本数做平均，避免除到 NaN
+        if valid_samples > 0:
+            train_loss /= valid_samples
+        else:
+            train_loss = float('nan')
         history['train_loss'].append(train_loss)
-        # 在 train 里打印 loss
-        print(f"Epoch {epoch+1} Train Loss: {train_loss:.4f}")
+        print(f"Epoch {epoch+1} Train Loss: {train_loss:.4f} "
+              f"(nan batches: {nan_batches}/{len(train_loader)})")
 
         # Validation
         model.eval()
@@ -106,6 +137,7 @@ def train(args):
                 images = images.to(device)
                 masks = masks.to(device)
 
+                # ★ 验证也不要 autocast
                 outputs = model(images)
                 loss = criterion(outputs, masks)
                 val_loss += loss.item() * images.size(0)

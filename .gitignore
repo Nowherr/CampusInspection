@@ -1,40 +1,40 @@
-# 虚拟环境
-venv/
-ENV/
-env/
-
-# IDE配置文件
-.idea/
-.vscode/
-*.swp
-*.swo
-
-# Python缓存
+# ===== Python =====
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+*.egg-info/
 
-# 模型文件与日志（避免上传过大文件）
+# ===== 虚拟环境 =====
+venv/
+env/
+.venv/
+
+# ===== IDE =====
+.idea/
+.vscode/
+*.swp
+
+# ===== 数据集（太大，不上传） =====
+CamVid/
+
+# ===== 训练产物（权重文件，太大） =====
+checkpoint/
 *.pth
 *.pt
 *.ckpt
-logs/
-runs/
 
-# 数据集文件（避免上传大体积数据）
-datasets/*.png
-datasets/*.jpg
-datasets/*.jpeg
-datasets/*.bmp
-datasets/*.tif
+# ===== 推理结果 =====
+predictions/
 
-# 系统文件
-.DS_Store
-Thumbs.db
-
-# 临时文件
-*.tmp
+# ===== 日志 =====
 *.log
-*.txt
-project_structure.txt
+runs/
+logs/
+
+# ===== 其他大文件 =====
+*.zip
+*.tar
+*.gz
+*.rar
+*.pdf

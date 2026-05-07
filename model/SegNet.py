@@ -177,11 +177,8 @@ class SegNet(nn.Module):
 
 
 if __name__ == '__main__':
-    model = SegNet(num_classes=10)
+    model = SegNet(num_classes=12)
     print(model)
     img = torch.randn(1, 3, 224, 224)
     output = model(img)
     print(output.size())
-
-
-
