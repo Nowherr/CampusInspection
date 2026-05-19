@@ -46,8 +46,8 @@ if uploaded:
 
     if scenario == "📸 语义分割概览":
         c1, c2 = st.columns(2)
-        c1.image(image_rgb, caption="原图", use_column_width=True)
-        c2.image(seg.colorize(mask), caption="语义分割结果", use_column_width=True)
+        c1.image(image_rgb, caption="原图", width='stretch')
+        c2.image(seg.colorize(mask), caption="语义分割结果", width='stretch')
 
         ratio = seg.get_class_ratio(mask)
         df = pd.DataFrame({
@@ -62,7 +62,7 @@ if uploaded:
         thr = st.sidebar.slider("违规重叠阈值", 0.01, 0.5, 0.05, 0.01)
         result = detect_illegal_parking(mask, image_bgr, overlap_threshold=thr)
         st.image(cv2.cvtColor(result['visualization'], cv2.COLOR_BGR2RGB),
-                 use_column_width=True)
+                 width='stretch')
         c1, c2, c3 = st.columns(3)
         c1.metric("检测车辆", result['total_cars'])
         c2.metric("违规数量", result['illegal_count'])
@@ -75,7 +75,7 @@ if uploaded:
     elif scenario == "🚶 行人闯入":
         result = detect_pedestrian_intrusion(mask, image_bgr)
         st.image(cv2.cvtColor(result['visualization'], cv2.COLOR_BGR2RGB),
-                 use_column_width=True)
+                 width='stretch')
         c1, c2 = st.columns(2)
         c1.metric("行人总数", result['total_pedestrians'])
         c2.metric("高风险行人", result['high_risk_count'])
@@ -86,7 +86,7 @@ if uploaded:
     elif scenario == "🌳 绿视率评估":
         result = evaluate_green_view(mask, image_bgr)
         st.image(cv2.cvtColor(result['visualization'], cv2.COLOR_BGR2RGB),
-                 use_column_width=True)
+                 width='stretch')
         c1, c2 = st.columns(2)
         c1.metric("整体绿视率", f"{result['overall_ratio']*100:.2f}%")
         c2.metric("评级", result['grade'])

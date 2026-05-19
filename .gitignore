@@ -23,9 +23,14 @@ checkpoint/
 *.pth
 *.pt
 *.ckpt
+checkpoint_deeplabv3plus/
+*.pth
+*.pt
+*.ckpt
 
 # ===== 推理结果 =====
 predictions/
+predictions_deeplabv3plus/
 
 # ===== 日志 =====
 *.log
