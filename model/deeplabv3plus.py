@@ -1,4 +1,5 @@
 from .backbone import *
+from .cbam import CBAM
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -33,31 +34,19 @@ class ASPPConv(nn.Sequential):
 
 
 class ASPP(nn.Module):
-    """
-    Standard DeepLabV3+ ASPP:
-      - 1x1 conv branch
-      - 3 dilated conv branches
-      - global image pooling branch
-      - concat (5 * out_channels) -> 1x1 project -> out_channels
-    """
     def __init__(self, in_channels, out_channels=256, dilations=(6, 12, 18)):
         super().__init__()
         branches = []
-        # 1x1 branch
         branches.append(nn.Sequential(
             nn.Conv2d(in_channels, out_channels, 1, bias=False),
             nn.BatchNorm2d(out_channels),
             nn.ReLU(inplace=True),
         ))
-        # dilated branches
         for d in dilations:
             branches.append(ASPPConv(in_channels, out_channels, d))
-        # image pooling branch
         branches.append(ImagePooling(in_channels, out_channels))
-
         self.branches = nn.ModuleList(branches)
 
-        # project back to out_channels (this is the key fix!)
         self.project = nn.Sequential(
             nn.Conv2d(len(branches) * out_channels, out_channels, 1, bias=False),
             nn.BatchNorm2d(out_channels),
@@ -72,12 +61,13 @@ class ASPP(nn.Module):
 
 class Deeplabv3plus(nn.Module):
     """
-    DeepLabV3+ with proper decoder:
-      high-level ---ASPP---> 256ch --upsample--+
-                                                |-- concat --> 3x3 --> 3x3 --> 1x1 classifier
-      low-level ---1x1 conv---> 48ch -----------+
+    DeepLabV3+ with CBAM attention:
+      high-level ---ASPP---> 256ch --[CBAM]--> upsample --+
+                                                          |-- concat --> decoder --> classifier
+      low-level ---1x1 conv---> 48ch --[CBAM]------------+
     """
-    def __init__(self, backbone='resnet50', num_classes=12, low_level_channels=48):
+    def __init__(self, backbone='resnet50', num_classes=12,
+                 low_level_channels=48, use_cbam=True):
         super().__init__()
         if backbone in ('resnet18', 'resnet34'):
             high_level_in = 512
@@ -87,19 +77,26 @@ class Deeplabv3plus(nn.Module):
             low_level_in = 512
 
         self.num_classes = num_classes
+        self.use_cbam = use_cbam
         self.backbone = get_backbone(backbone)
 
         # ASPP: high-level feature -> 256 channels
         self.aspp = ASPP(high_level_in, out_channels=256)
 
-        # Low-level projection: reduce channels to 48 (not num_classes!)
+        # ★ CBAM on high-level (after ASPP)
+        self.cbam_high = CBAM(256, reduction=16, kernel_size=7) if use_cbam else nn.Identity()
+
+        # Low-level projection: reduce channels to 48
         self.low_level_proj = nn.Sequential(
             nn.Conv2d(low_level_in, low_level_channels, 1, bias=False),
             nn.BatchNorm2d(low_level_channels),
             nn.ReLU(inplace=True),
         )
 
-        # Decoder: concat(256 + 48) -> 3x3 -> 3x3 -> classifier
+        # ★ CBAM on low-level (after projection)
+        self.cbam_low = CBAM(low_level_channels, reduction=8, kernel_size=7) if use_cbam else nn.Identity()
+
+        # Decoder
         self.decoder = nn.Sequential(
             nn.Conv2d(256 + low_level_channels, 256, 3, padding=1, bias=False),
             nn.BatchNorm2d(256),
@@ -115,7 +112,6 @@ class Deeplabv3plus(nn.Module):
         self._init_weights()
 
     def _init_weights(self):
-        # Initialize only new layers (do NOT override pretrained backbone weights)
         for name, m in self.named_modules():
             if name.startswith('backbone'):
                 continue
@@ -129,16 +125,17 @@ class Deeplabv3plus(nn.Module):
 
     def forward(self, x):
         input_size = x.shape[2:]
-        # backbone returns 4 feature maps; we use x2 (low-level) and x4 (high-level)
         _, low_level, _, high_level = self.backbone(x)
 
         # high-level branch
         h = self.aspp(high_level)
+        h = self.cbam_high(h)                       # ★ CBAM
         h = F.interpolate(h, size=low_level.shape[2:],
                           mode='bilinear', align_corners=False)
 
         # low-level branch
         low = self.low_level_proj(low_level)
+        low = self.cbam_low(low)                    # ★ CBAM
 
         # decode
         h = torch.cat([h, low], dim=1)
@@ -149,9 +146,9 @@ class Deeplabv3plus(nn.Module):
 
 
 if __name__ == "__main__":
-    model = Deeplabv3plus(backbone='resnet50', num_classes=12)
+    model = Deeplabv3plus(backbone='resnet50', num_classes=12, use_cbam=True)
     model.eval()
     image = torch.randn(1, 3, 512, 512)
-    print("input:", image.shape)
+    print("input :", image.shape)
     print("output:", model(image).shape)
     print(f"#params: {sum(p.numel() for p in model.parameters())/1e6:.2f}M")

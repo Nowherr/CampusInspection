@@ -9,6 +9,7 @@ import torch.nn.functional as F
 
 from datasets.Camvid_dataloader11_v3plus import get_dataloader
 from model.deeplabv3plus import Deeplabv3plus
+from model.losses import CEDiceLoss
 from metric import SegmentationMetric
 
 os.environ['NO_ALBUMENTATIONS_UPDATE'] = '1'
@@ -34,30 +35,41 @@ def parse_arguments():
     # ---- Loss / class-weights ----
     parser.add_argument('--use_class_weights', action='store_true', default=True)
     parser.add_argument('--weight_mode', type=str, default='sqrt_mfb',
-                        choices=['mfb', 'sqrt_mfb', 'inv_log', 'none'],
-                        help='Strategy for computing class weights')
-    parser.add_argument('--w_min', type=float, default=0.5,
-                        help='Lower clip for class weights')
-    parser.add_argument('--w_max', type=float, default=2.5,
-                        help='Upper clip for class weights')
+                        choices=['mfb', 'sqrt_mfb', 'inv_log', 'none'])
+    parser.add_argument('--w_min', type=float, default=0.5)
+    parser.add_argument('--w_max', type=float, default=2.5)
     parser.add_argument('--label_smoothing', type=float, default=0.05)
 
-    # ---- OHEM (default OFF for small dataset) ----
-    parser.add_argument('--use_ohem', action='store_true', default=False,
-                        help='Use Online Hard Example Mining CE')
+    # ---- OHEM ----
+    parser.add_argument('--use_ohem', action='store_true', default=False)
     parser.add_argument('--ohem_thresh', type=float, default=0.7)
     parser.add_argument('--ohem_min_kept', type=int, default=100000)
 
     # ---- LR schedule ----
     parser.add_argument('--poly_power', type=float, default=0.9)
-    parser.add_argument('--warmup_iters', type=int, default=500,
-                        help='Linear warmup iterations from 0 to base_lr')
+    parser.add_argument('--warmup_iters', type=int, default=500)
     parser.add_argument('--grad_clip', type=float, default=10.0)
+
+    # ★★★★★ NEW: CBAM / Dice / AMP ★★★★★
+    parser.add_argument('--use_cbam', action='store_true', default=True,
+                        help='Enable CBAM attention modules (high-level + low-level).')
+    parser.add_argument('--no_cbam', dest='use_cbam', action='store_false',
+                        help='Disable CBAM (for ablation).')
+    parser.add_argument('--use_dice', action='store_true', default=True,
+                        help='Add Dice loss to CE (CE + dice_weight * Dice).')
+    parser.add_argument('--no_dice', dest='use_dice', action='store_false')
+    parser.add_argument('--dice_weight', type=float, default=0.5,
+                        help='Weight of Dice term in combined loss.')
+    parser.add_argument('--use_amp', action='store_true', default=True,
+                        help='Mixed-precision training (saves VRAM, faster on T600).')
+    parser.add_argument('--no_amp', dest='use_amp', action='store_false')
+    parser.add_argument('--tag', type=str, default='cbam_dice',
+                        help='Tag appended to checkpoint filename.')
     return parser.parse_args()
 
 
 # ---------------------------------------------------------------------------
-# OHEM Cross Entropy Loss  (kept for optional later finetune)
+# OHEM Cross Entropy Loss
 # ---------------------------------------------------------------------------
 class OhemCrossEntropy(nn.Module):
     def __init__(self, ignore_index=255, thresh=0.7, min_kept=100000, weight=None):
@@ -72,15 +84,12 @@ class OhemCrossEntropy(nn.Module):
         pixel_losses = self.criterion(logits, target).view(-1)
         valid_mask = target.view(-1) != self.ignore_index
         valid_losses = pixel_losses[valid_mask]
-
         if valid_losses.numel() == 0:
             return pixel_losses.sum() * 0.0
-
         k = min(self.min_kept, valid_losses.numel())
         sorted_losses, _ = torch.sort(valid_losses, descending=True)
         topk_thresh = sorted_losses[k - 1].item()
         final_thresh = max(self.thresh_loss, topk_thresh)
-
         kept = valid_losses[valid_losses >= final_thresh]
         if kept.numel() == 0:
             return valid_losses.mean()
@@ -92,13 +101,6 @@ class OhemCrossEntropy(nn.Module):
 # ---------------------------------------------------------------------------
 def compute_class_weights(train_loader, num_classes, ignore_index=0,
                           mode='sqrt_mfb', w_min=0.5, w_max=2.5):
-    """
-    mode:
-      'mfb'      : median / freq                (aggressive, original)
-      'sqrt_mfb' : sqrt(median / freq)          ← recommended for small dataset
-      'inv_log'  : 1 / log(1.02 + freq)
-      'none'     : all ones (no weighting)
-    """
     print(f"📊 Computing class frequencies for weighted loss (mode={mode}) ...")
     class_pixel_count = torch.zeros(num_classes, dtype=torch.float64)
     for _, masks in tqdm(train_loader, desc='Counting pixels'):
@@ -112,11 +114,9 @@ def compute_class_weights(train_loader, num_classes, ignore_index=0,
     freq_safe = np.where(present, freq_np, 1.0)
 
     if mode == 'mfb':
-        med = float(np.median(freq_np[present]))
-        w = med / freq_safe
+        med = float(np.median(freq_np[present])); w = med / freq_safe
     elif mode == 'sqrt_mfb':
-        med = float(np.median(freq_np[present]))
-        w = np.sqrt(med / freq_safe)
+        med = float(np.median(freq_np[present])); w = np.sqrt(med / freq_safe)
     elif mode == 'inv_log':
         w = 1.0 / np.log(1.02 + freq_safe)
     elif mode == 'none':
@@ -124,12 +124,9 @@ def compute_class_weights(train_loader, num_classes, ignore_index=0,
     else:
         raise ValueError(f"Unknown weight mode: {mode}")
 
-    # zero-out absent classes before clipping (so clip lower-bound doesn't revive them)
     w = np.where(present, w, 0.0)
-    # clip only on the present classes
     w_clipped = np.clip(w, w_min, w_max)
     w_clipped = np.where(present, w_clipped, 0.0)
-
     if 0 <= ignore_index < num_classes:
         w_clipped[ignore_index] = 0.0
 
@@ -148,6 +145,8 @@ def train(args):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     n_gpu = torch.cuda.device_count()
     print(f"Device: {device}, GPUs available: {n_gpu}")
+    print(f"Config: use_cbam={args.use_cbam} | use_dice={args.use_dice} "
+          f"(w={args.dice_weight}) | use_amp={args.use_amp}")
 
     # --- Data ---
     train_loader, val_loader = get_dataloader(args.data_root, batch_size=args.batch_size)
@@ -156,10 +155,13 @@ def train(args):
     print(f"Train samples: {train_dataset_size}, Val samples: {val_dataset_size}")
 
     # --- Model ---
-    model = Deeplabv3plus(backbone=args.backbone, num_classes=args.num_classes)
+    model = Deeplabv3plus(backbone=args.backbone,
+                          num_classes=args.num_classes,
+                          use_cbam=args.use_cbam)
     model.to(device)
     n_params = sum(p.numel() for p in model.parameters()) / 1e6
-    print(f"✅ Model: DeepLabV3+ | backbone={args.backbone} | #params={n_params:.2f}M")
+    print(f"✅ Model: DeepLabV3+ | backbone={args.backbone} "
+          f"| CBAM={args.use_cbam} | #params={n_params:.2f}M")
 
     # --- Loss ---
     class_weights = None
@@ -172,26 +174,37 @@ def train(args):
         ).to(device)
 
     if args.use_ohem:
-        criterion = OhemCrossEntropy(
+        ce_criterion = OhemCrossEntropy(
             ignore_index=args.ignore_index,
             thresh=args.ohem_thresh,
             min_kept=args.ohem_min_kept,
             weight=class_weights,
         )
-        print(f"✅ Using OHEM CE (thresh={args.ohem_thresh}, min_kept={args.ohem_min_kept})")
+        print(f"✅ Base CE: OHEM (thresh={args.ohem_thresh}, min_kept={args.ohem_min_kept})")
     else:
-        criterion = nn.CrossEntropyLoss(
+        ce_criterion = nn.CrossEntropyLoss(
             weight=class_weights,
             ignore_index=args.ignore_index,
             label_smoothing=args.label_smoothing,
         )
-        print(f"✅ Using weighted CE (label_smoothing={args.label_smoothing})")
+        print(f"✅ Base CE: weighted (label_smoothing={args.label_smoothing})")
 
-    # --- Optimizer: backbone uses 0.1x LR ---
+    if args.use_dice:
+        criterion = CEDiceLoss(
+            ce_criterion=ce_criterion,
+            num_classes=args.num_classes,
+            ignore_index=args.ignore_index,
+            dice_weight=args.dice_weight,
+        )
+        print(f"✅ Final loss: CE + {args.dice_weight} * Dice")
+    else:
+        criterion = ce_criterion
+        print(f"✅ Final loss: CE only")
+
+    # --- Optimizer ---
     backbone_params = list(model.backbone.parameters())
     backbone_ids = {id(p) for p in backbone_params}
     head_params = [p for p in model.parameters() if id(p) not in backbone_ids]
-
     base_lrs = [args.lr * 0.1, args.lr]
     optimizer = torch.optim.SGD(
         [
@@ -203,6 +216,11 @@ def train(args):
         nesterov=True,
     )
 
+    # --- AMP scaler ---
+    scaler = torch.amp.GradScaler('cuda', enabled=(args.use_amp and device.type == 'cuda'))
+    if args.use_amp and device.type == 'cuda':
+        print("✅ Mixed precision (AMP) enabled")
+
     # --- Resume ---
     start_epoch = 0
     best_miou = 0.0
@@ -211,11 +229,19 @@ def train(args):
         ckpt = torch.load(args.resume, map_location=device)
         start_epoch = ckpt['epoch']
         best_miou = ckpt.get('best_miou', 0.0)
-        model.load_state_dict(ckpt['model_state_dict'])
+        # strict=False so it tolerates added/removed CBAM modules
+        missing, unexpected = model.load_state_dict(ckpt['model_state_dict'], strict=False)
+        if missing:    print(f"⚠️  missing keys: {len(missing)} (e.g. {missing[:3]})")
+        if unexpected: print(f"⚠️  unexpected keys: {len(unexpected)} (e.g. {unexpected[:3]})")
         try:
             optimizer.load_state_dict(ckpt['optimizer_state_dict'])
         except Exception as e:
             print(f"⚠️  optimizer state not loaded: {e}")
+        if 'scaler_state_dict' in ckpt and args.use_amp:
+            try:
+                scaler.load_state_dict(ckpt['scaler_state_dict'])
+            except Exception as e:
+                print(f"⚠️  scaler state not loaded: {e}")
         print(f"Loaded checkpoint (epoch {start_epoch}, best_miou {best_miou:.4f})")
 
     history = {'train_loss': [], 'val_loss': [],
@@ -225,8 +251,7 @@ def train(args):
     cur_iter = start_epoch * len(train_loader)
     warmup_iters = max(0, int(args.warmup_iters))
 
-    print(f"🚀 Start training ({args.model} / {args.backbone}) | "
-          f"total iters: {total_iters} | warmup: {warmup_iters}")
+    print(f"🚀 Start training | total iters: {total_iters} | warmup: {warmup_iters}")
 
     for epoch in range(start_epoch, args.epochs):
         # ---------------- Train ----------------
@@ -235,7 +260,7 @@ def train(args):
         t0 = time.time()
         for images, masks in tqdm(train_loader,
                                   desc=f'Epoch {epoch+1}/{args.epochs} [Train]'):
-            # ---- LR schedule: linear warmup + poly decay ----
+            # ---- LR schedule ----
             if cur_iter < warmup_iters:
                 lr_scale = (cur_iter + 1) / float(warmup_iters)
             else:
@@ -248,13 +273,20 @@ def train(args):
             images = images.to(device, non_blocking=True)
             masks = masks.to(device, non_blocking=True)
 
-            optimizer.zero_grad()
-            outputs = model(images)
-            loss = criterion(outputs, masks)
-            loss.backward()
+            optimizer.zero_grad(set_to_none=True)
+
+            # ---- AMP forward ----
+            with torch.amp.autocast('cuda', enabled=(args.use_amp and device.type == 'cuda')):
+                outputs = model(images)
+                loss = criterion(outputs, masks)
+
+            # ---- AMP backward + clip + step ----
+            scaler.scale(loss).backward()
             if args.grad_clip > 0:
+                scaler.unscale_(optimizer)
                 torch.nn.utils.clip_grad_norm_(model.parameters(), args.grad_clip)
-            optimizer.step()
+            scaler.step(optimizer)
+            scaler.update()
 
             train_loss += loss.item() * images.size(0)
             cur_iter += 1
@@ -275,8 +307,10 @@ def train(args):
                 images = images.to(device, non_blocking=True)
                 masks = masks.to(device, non_blocking=True)
 
-                outputs = model(images)
-                loss = criterion(outputs, masks)
+                # AMP also helps in val to save VRAM
+                with torch.amp.autocast('cuda', enabled=(args.use_amp and device.type == 'cuda')):
+                    outputs = model(images)
+                    loss = criterion(outputs, masks)
                 val_loss += loss.item() * images.size(0)
 
                 preds = torch.argmax(outputs, dim=1).cpu().numpy()
@@ -293,7 +327,6 @@ def train(args):
             else:
                 print(f"{k}: {v:.4f}")
 
-        # ---- Fair mIoU: exclude ignore_index (void) ----
         iou_per_class = scores.get('Intersection over Union', None)
         miou_all = scores['Mean Intersection over Union(mIoU)']
         if isinstance(iou_per_class, np.ndarray):
@@ -314,13 +347,17 @@ def train(args):
         if miou > best_miou:
             best_miou = miou
             ckpt_path = os.path.join(
-                args.checkpoint, f'{args.model}_{args.backbone}_best.pth')
+                args.checkpoint,
+                f'{args.model}_{args.backbone}_{args.tag}_best.pth')
             torch.save({
                 'epoch': epoch + 1,
                 'model_state_dict': model.state_dict(),
                 'optimizer_state_dict': optimizer.state_dict(),
+                'scaler_state_dict': scaler.state_dict(),
                 'best_miou': best_miou,
                 'backbone': args.backbone,
+                'use_cbam': args.use_cbam,
+                'use_dice': args.use_dice,
             }, ckpt_path)
             print(f"💾 Saved best model ({ckpt_path}) | mIoU: {best_miou:.4f}")
 

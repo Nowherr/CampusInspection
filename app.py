@@ -12,7 +12,7 @@ from scenarios.pedestrian_intrusion import detect_pedestrian_intrusion
 from scenarios.green_view import evaluate_green_view
 
 
-CKPT = './checkpoint_deeplabv3plus/deeplabv3plus_resnet50_best.pth'
+CKPT = './checkpoint_deeplabv3plus/deeplabv3plus_resnet50_cbam_dice_best.pth'
 
 
 @st.cache_resource

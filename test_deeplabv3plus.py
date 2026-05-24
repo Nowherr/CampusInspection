@@ -40,10 +40,11 @@ CLASS_NAMES = [
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
+    
     parser.add_argument('--image_dir', type=str, default='./datasets/test',
                         help='Input image file or folder')
     parser.add_argument('--checkpoint', type=str,
-                        default='./checkpoint_deeplabv3plus/deeplabv3plus_resnet50_best.pth',
+                        default='./checkpoint_deeplabv3plus/deeplabv3plus_resnet50_cbam_dice_best.pth',
                         help='Checkpoint path')
     parser.add_argument('--backbone', type=str, default='resnet50',
                         choices=['resnet18', 'resnet34', 'resnet50', 'resnet101'])
