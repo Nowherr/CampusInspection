@@ -101,7 +101,7 @@ class OhemCrossEntropy(nn.Module):
 # ---------------------------------------------------------------------------
 def compute_class_weights(train_loader, num_classes, ignore_index=0,
                           mode='sqrt_mfb', w_min=0.5, w_max=2.5):
-    print(f"📊 Computing class frequencies for weighted loss (mode={mode}) ...")
+    print(f"Computing class frequencies for weighted loss (mode={mode}) ...")
     class_pixel_count = torch.zeros(num_classes, dtype=torch.float64)
     for _, masks in tqdm(train_loader, desc='Counting pixels'):
         for c in range(num_classes):
@@ -160,7 +160,7 @@ def train(args):
                           use_cbam=args.use_cbam)
     model.to(device)
     n_params = sum(p.numel() for p in model.parameters()) / 1e6
-    print(f"✅ Model: DeepLabV3+ | backbone={args.backbone} "
+    print(f"Model: DeepLabV3+ | backbone={args.backbone} "
           f"| CBAM={args.use_cbam} | #params={n_params:.2f}M")
 
     # --- Loss ---
@@ -180,14 +180,14 @@ def train(args):
             min_kept=args.ohem_min_kept,
             weight=class_weights,
         )
-        print(f"✅ Base CE: OHEM (thresh={args.ohem_thresh}, min_kept={args.ohem_min_kept})")
+        print(f"Base CE: OHEM (thresh={args.ohem_thresh}, min_kept={args.ohem_min_kept})")
     else:
         ce_criterion = nn.CrossEntropyLoss(
             weight=class_weights,
             ignore_index=args.ignore_index,
             label_smoothing=args.label_smoothing,
         )
-        print(f"✅ Base CE: weighted (label_smoothing={args.label_smoothing})")
+        print(f"Base CE: weighted (label_smoothing={args.label_smoothing})")
 
     if args.use_dice:
         criterion = CEDiceLoss(
@@ -196,10 +196,10 @@ def train(args):
             ignore_index=args.ignore_index,
             dice_weight=args.dice_weight,
         )
-        print(f"✅ Final loss: CE + {args.dice_weight} * Dice")
+        print(f"Final loss: CE + {args.dice_weight} * Dice")
     else:
         criterion = ce_criterion
-        print(f"✅ Final loss: CE only")
+        print(f"Final loss: CE only")
 
     # --- Optimizer ---
     backbone_params = list(model.backbone.parameters())
@@ -219,7 +219,7 @@ def train(args):
     # --- AMP scaler ---
     scaler = torch.amp.GradScaler('cuda', enabled=(args.use_amp and device.type == 'cuda'))
     if args.use_amp and device.type == 'cuda':
-        print("✅ Mixed precision (AMP) enabled")
+        print("Mixed precision (AMP) enabled")
 
     # --- Resume ---
     start_epoch = 0
@@ -231,17 +231,17 @@ def train(args):
         best_miou = ckpt.get('best_miou', 0.0)
         # strict=False so it tolerates added/removed CBAM modules
         missing, unexpected = model.load_state_dict(ckpt['model_state_dict'], strict=False)
-        if missing:    print(f"⚠️  missing keys: {len(missing)} (e.g. {missing[:3]})")
-        if unexpected: print(f"⚠️  unexpected keys: {len(unexpected)} (e.g. {unexpected[:3]})")
+        if missing:    print(f" missing keys: {len(missing)} (e.g. {missing[:3]})")
+        if unexpected: print(f" unexpected keys: {len(unexpected)} (e.g. {unexpected[:3]})")
         try:
             optimizer.load_state_dict(ckpt['optimizer_state_dict'])
         except Exception as e:
-            print(f"⚠️  optimizer state not loaded: {e}")
+            print(f" optimizer state not loaded: {e}")
         if 'scaler_state_dict' in ckpt and args.use_amp:
             try:
                 scaler.load_state_dict(ckpt['scaler_state_dict'])
             except Exception as e:
-                print(f"⚠️  scaler state not loaded: {e}")
+                print(f" scaler state not loaded: {e}")
         print(f"Loaded checkpoint (epoch {start_epoch}, best_miou {best_miou:.4f})")
 
     history = {'train_loss': [], 'val_loss': [],
@@ -251,7 +251,7 @@ def train(args):
     cur_iter = start_epoch * len(train_loader)
     warmup_iters = max(0, int(args.warmup_iters))
 
-    print(f"🚀 Start training | total iters: {total_iters} | warmup: {warmup_iters}")
+    print(f"Start training | total iters: {total_iters} | warmup: {warmup_iters}")
 
     for epoch in range(start_epoch, args.epochs):
         # ---------------- Train ----------------
@@ -320,7 +320,7 @@ def train(args):
         history['val_loss'].append(val_loss)
 
         scores = evaluator.get_scores()
-        print(f"\n📈 Validation Epoch {epoch+1}:")
+        print(f"\nValidation Epoch {epoch+1}:")
         for k, v in scores.items():
             if isinstance(v, np.ndarray):
                 print(f"{k}: {np.round(v, 3)}")
@@ -334,7 +334,7 @@ def train(args):
             if 0 <= args.ignore_index < args.num_classes:
                 mask_valid[args.ignore_index] = False
             miou = float(np.nanmean(iou_per_class[mask_valid]))
-            print(f"🎯 mIoU (exclude class {args.ignore_index}): {miou:.4f}   "
+            print(f"mIoU (exclude class {args.ignore_index}): {miou:.4f}   "
                   f"| mIoU (all): {miou_all:.4f}")
         else:
             miou = miou_all
@@ -359,11 +359,11 @@ def train(args):
                 'use_cbam': args.use_cbam,
                 'use_dice': args.use_dice,
             }, ckpt_path)
-            print(f"💾 Saved best model ({ckpt_path}) | mIoU: {best_miou:.4f}")
+            print(f"Saved best model ({ckpt_path}) | mIoU: {best_miou:.4f}")
 
-        print(f"🕒 Epoch time: {time.time() - t0:.2f}s\n")
+        print(f"Epoch time: {time.time() - t0:.2f}s\n")
 
-    print(f"🎉 Training complete! Best mIoU (exclude void): {best_miou:.4f}")
+    print(f"Training complete! Best mIoU (exclude void): {best_miou:.4f}")
 
 
 if __name__ == '__main__':

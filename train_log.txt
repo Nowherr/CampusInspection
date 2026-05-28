@@ -1,0 +1,1479 @@
+Device: cuda, GPUs available: 1
+Config: use_cbam=True | use_dice=True (w=0.3) | use_amp=True
+Train samples: 367, Val samples: 101
+Model: DeepLabV3+ | backbone=resnet50 | CBAM=True | #params=40.37M
+Computing class frequencies for weighted loss (mode=sqrt_mfb) ...
+
+Class pixel counts: [8564931, 11959035, 17001001, 867382, 25335158, 3255731, 7910170, 1018270, 933642, 6144217, 645871, 230192]
+Class frequencies : [0.10213, 0.1426, 0.20272, 0.01034, 0.30209, 0.03882, 0.09432, 0.01214, 0.01113, 0.07326, 0.0077, 0.00274]
+Class weights     : [0.0, 0.6269999742507935, 0.5260000228881836, 2.328000068664551, 0.5, 1.2009999752044678, 0.7710000276565552, 2.1480000019073486, 2.24399995803833, 0.875, 2.5, 2.5]
+Base CE: weighted (label_smoothing=0.05)
+Final loss: CE + 0.3 * Dice
+Mixed precision (AMP) enabled
+Start training | total iters: 7280 | warmup: 500
+
+
+Epoch 1 Train Loss: 6.8229 | LR(bb/head): 0.000091 / 0.000910
+
+
+Validation Epoch 1:
+Pixel Accuracy: 0.1358
+Class Pixel Accuracy: [0.12  0.251 0.166 0.135 0.157 0.022 0.061 0.074 0.141 0.216 0.101 0.001]
+Intersection over Union: [0.015 0.117 0.138 0.007 0.139 0.017 0.048 0.012 0.02  0.046 0.009 0.001]
+Class F1 Score: [0.03  0.21  0.242 0.013 0.245 0.033 0.092 0.023 0.039 0.088 0.017 0.002]
+Frequency Weighted Intersection over Union: 0.0980
+Mean Pixel Accuracy: 0.1204
+Mean Intersection over Union(mIoU): 0.0473
+Mean F1 Score: 0.0861
+mIoU (exclude class 0): 0.0502   | mIoU (all): 0.0473
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.0502
+Epoch time: 192.59s
+
+
+
+Epoch 2 Train Loss: 4.9882 | LR(bb/head): 0.000182 / 0.001820
+
+
+
+Validation Epoch 2:
+Pixel Accuracy: 0.3347
+Class Pixel Accuracy: [0.054 0.563 0.295 0.075 0.574 0.086 0.108 0.225 0.08  0.448 0.133 0.027]
+Intersection over Union: [0.014 0.22  0.235 0.006 0.447 0.062 0.092 0.037 0.028 0.108 0.019 0.022]
+Class F1 Score: [0.028 0.36  0.381 0.012 0.618 0.117 0.169 0.072 0.054 0.195 0.037 0.043]
+Frequency Weighted Intersection over Union: 0.2349
+Mean Pixel Accuracy: 0.2223
+Mean Intersection over Union(mIoU): 0.1076
+Mean F1 Score: 0.1739
+mIoU (exclude class 0): 0.1161   | mIoU (all): 0.1076
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.1161
+Epoch time: 164.00s
+
+
+
+Epoch 3 Train Loss: 3.7630 | LR(bb/head): 0.000273 / 0.002730
+
+
+
+Validation Epoch 3:
+Pixel Accuracy: 0.5099
+Class Pixel Accuracy: [0.008 0.554 0.477 0.083 0.776 0.194 0.477 0.082 0.08  0.444 0.152 0.143]
+Intersection over Union: [0.006 0.319 0.367 0.01  0.619 0.135 0.323 0.026 0.033 0.288 0.03  0.101]
+Class F1 Score: [0.012 0.483 0.537 0.02  0.764 0.238 0.488 0.051 0.064 0.448 0.059 0.183]
+Frequency Weighted Intersection over Union: 0.3768
+Mean Pixel Accuracy: 0.2891
+Mean Intersection over Union(mIoU): 0.1881
+Mean F1 Score: 0.2789
+mIoU (exclude class 0): 0.2046   | mIoU (all): 0.1881
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.2046
+Epoch time: 162.72s
+
+
+
+Epoch 4 Train Loss: 2.8792 | LR(bb/head): 0.000364 / 0.003640
+
+
+
+Validation Epoch 4:
+Pixel Accuracy: 0.5801
+Class Pixel Accuracy: [0.002 0.783 0.531 0.024 0.786 0.454 0.491 0.326 0.04  0.684 0.369 0.208]
+Intersection over Union: [0.001 0.417 0.445 0.008 0.657 0.251 0.396 0.08  0.029 0.403 0.043 0.139]
+Class F1 Score: [0.003 0.589 0.616 0.017 0.793 0.401 0.567 0.148 0.056 0.575 0.083 0.244]
+Frequency Weighted Intersection over Union: 0.4423
+Mean Pixel Accuracy: 0.3914
+Mean Intersection over Union(mIoU): 0.2391
+Mean F1 Score: 0.3409
+mIoU (exclude class 0): 0.2607   | mIoU (all): 0.2391
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.2607
+Epoch time: 163.01s
+
+
+
+Epoch 5 Train Loss: 2.2023 | LR(bb/head): 0.000455 / 0.004550
+
+
+
+Validation Epoch 5:
+Pixel Accuracy: 0.6502
+Class Pixel Accuracy: [0.    0.896 0.629 0.027 0.832 0.403 0.621 0.334 0.021 0.754 0.432 0.338]
+Intersection over Union: [0.    0.485 0.535 0.012 0.715 0.268 0.464 0.127 0.019 0.525 0.083 0.181]
+Class F1 Score: [0.    0.653 0.697 0.024 0.834 0.423 0.634 0.226 0.037 0.688 0.153 0.306]
+Frequency Weighted Intersection over Union: 0.5051
+Mean Pixel Accuracy: 0.4405
+Mean Intersection over Union(mIoU): 0.2845
+Mean F1 Score: 0.3896
+mIoU (exclude class 0): 0.3104   | mIoU (all): 0.2845
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.3104
+Epoch time: 163.09s
+
+
+
+Epoch 6 Train Loss: 1.8604 | LR(bb/head): 0.000497 / 0.004970
+
+
+
+Validation Epoch 6:
+Pixel Accuracy: 0.7074
+Class Pixel Accuracy: [0.    0.919 0.661 0.007 0.805 0.648 0.792 0.315 0.073 0.754 0.582 0.466]
+Intersection over Union: [0.    0.639 0.598 0.006 0.73  0.374 0.627 0.194 0.061 0.596 0.08  0.195]
+Class F1 Score: [0.    0.78  0.748 0.012 0.844 0.545 0.771 0.325 0.115 0.747 0.148 0.326]
+Frequency Weighted Intersection over Union: 0.5792
+Mean Pixel Accuracy: 0.5018
+Mean Intersection over Union(mIoU): 0.3417
+Mean F1 Score: 0.4468
+mIoU (exclude class 0): 0.3728   | mIoU (all): 0.3417
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.3728
+Epoch time: 163.24s
+
+
+
+Epoch 7 Train Loss: 1.6770 | LR(bb/head): 0.000491 / 0.004910
+
+
+
+Validation Epoch 7:
+Pixel Accuracy: 0.7660
+Class Pixel Accuracy: [0.    0.846 0.792 0.004 0.865 0.553 0.908 0.293 0.252 0.771 0.68  0.342]
+Intersection over Union: [0.    0.748 0.691 0.004 0.769 0.377 0.748 0.215 0.161 0.628 0.109 0.212]
+Class F1 Score: [0.    0.856 0.817 0.007 0.87  0.548 0.856 0.353 0.277 0.771 0.197 0.35 ]
+Frequency Weighted Intersection over Union: 0.6491
+Mean Pixel Accuracy: 0.5254
+Mean Intersection over Union(mIoU): 0.3884
+Mean F1 Score: 0.4918
+mIoU (exclude class 0): 0.4237   | mIoU (all): 0.3884
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.4237
+Epoch time: 163.60s
+
+
+
+Epoch 8 Train Loss: 1.5352 | LR(bb/head): 0.000485 / 0.004849
+
+
+
+Validation Epoch 8:
+Pixel Accuracy: 0.7717
+Class Pixel Accuracy: [0.    0.905 0.736 0.005 0.877 0.63  0.913 0.374 0.252 0.796 0.761 0.439]
+Intersection over Union: [0.    0.76  0.672 0.005 0.797 0.462 0.734 0.243 0.154 0.64  0.108 0.248]
+Class F1 Score: [0.    0.863 0.804 0.009 0.887 0.632 0.846 0.392 0.266 0.781 0.196 0.398]
+Frequency Weighted Intersection over Union: 0.6594
+Mean Pixel Accuracy: 0.5573
+Mean Intersection over Union(mIoU): 0.4019
+Mean F1 Score: 0.5061
+mIoU (exclude class 0): 0.4384   | mIoU (all): 0.4019
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.4384
+Epoch time: 163.49s
+
+
+
+Epoch 9 Train Loss: 1.4742 | LR(bb/head): 0.000479 / 0.004788
+
+
+
+Validation Epoch 9:
+Pixel Accuracy: 0.7875
+Class Pixel Accuracy: [0.    0.91  0.792 0.009 0.868 0.671 0.901 0.385 0.289 0.849 0.77  0.413]
+Intersection over Union: [0.    0.813 0.697 0.009 0.801 0.481 0.769 0.251 0.199 0.63  0.109 0.248]
+Class F1 Score: [0.    0.897 0.822 0.017 0.889 0.65  0.869 0.402 0.332 0.773 0.196 0.397]
+Frequency Weighted Intersection over Union: 0.6806
+Mean Pixel Accuracy: 0.5714
+Mean Intersection over Union(mIoU): 0.4172
+Mean F1 Score: 0.5203
+mIoU (exclude class 0): 0.4551   | mIoU (all): 0.4172
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.4551
+Epoch time: 163.50s
+
+
+
+Epoch 10 Train Loss: 1.4559 | LR(bb/head): 0.000473 / 0.004728
+
+
+
+Validation Epoch 10:
+Pixel Accuracy: 0.7948
+Class Pixel Accuracy: [0.    0.891 0.77  0.024 0.847 0.768 0.96  0.518 0.304 0.87  0.852 0.426]
+Intersection over Union: [0.    0.844 0.707 0.021 0.799 0.511 0.804 0.279 0.223 0.653 0.108 0.261]
+Class F1 Score: [0.    0.915 0.828 0.041 0.888 0.676 0.891 0.436 0.365 0.79  0.196 0.414]
+Frequency Weighted Intersection over Union: 0.6955
+Mean Pixel Accuracy: 0.6024
+Mean Intersection over Union(mIoU): 0.4341
+Mean F1 Score: 0.5368
+mIoU (exclude class 0): 0.4736   | mIoU (all): 0.4341
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.4736
+Epoch time: 164.68s
+
+
+
+Epoch 11 Train Loss: 1.4263 | LR(bb/head): 0.000467 / 0.004667
+
+
+
+Validation Epoch 11:
+Pixel Accuracy: 0.8096
+Class Pixel Accuracy: [0.    0.946 0.757 0.03  0.869 0.812 0.955 0.507 0.415 0.835 0.818 0.475]
+Intersection over Union: [0.    0.852 0.714 0.025 0.827 0.548 0.808 0.302 0.272 0.683 0.125 0.28 ]
+Class F1 Score: [0.    0.92  0.833 0.049 0.905 0.708 0.894 0.464 0.427 0.812 0.223 0.438]
+Frequency Weighted Intersection over Union: 0.7130
+Mean Pixel Accuracy: 0.6182
+Mean Intersection over Union(mIoU): 0.4531
+Mean F1 Score: 0.5561
+mIoU (exclude class 0): 0.4943   | mIoU (all): 0.4531
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.4943
+Epoch time: 165.18s
+
+
+
+Epoch 12 Train Loss: 1.3856 | LR(bb/head): 0.000461 / 0.004606
+
+
+
+Validation Epoch 12:
+Pixel Accuracy: 0.7983
+Class Pixel Accuracy: [0.    0.947 0.706 0.028 0.852 0.827 0.967 0.609 0.522 0.851 0.882 0.41 ]
+Intersection over Union: [0.    0.876 0.677 0.025 0.822 0.572 0.806 0.268 0.275 0.663 0.118 0.25 ]
+Class F1 Score: [0.    0.934 0.808 0.048 0.902 0.728 0.892 0.422 0.431 0.797 0.21  0.4  ]
+Frequency Weighted Intersection over Union: 0.7046
+Mean Pixel Accuracy: 0.6335
+Mean Intersection over Union(mIoU): 0.4459
+Mean F1 Score: 0.5478
+mIoU (exclude class 0): 0.4865   | mIoU (all): 0.4459
+Epoch time: 164.42s
+
+
+
+Epoch 13 Train Loss: 1.3566 | LR(bb/head): 0.000454 / 0.004545
+
+
+
+Validation Epoch 13:
+Pixel Accuracy: 0.8263
+Class Pixel Accuracy: [0.    0.942 0.8   0.039 0.88  0.778 0.974 0.449 0.43  0.862 0.841 0.557]
+Intersection over Union: [0.    0.891 0.755 0.033 0.833 0.565 0.802 0.327 0.272 0.678 0.158 0.346]
+Class F1 Score: [0.    0.942 0.86  0.065 0.909 0.722 0.89  0.493 0.428 0.808 0.272 0.515]
+Frequency Weighted Intersection over Union: 0.7312
+Mean Pixel Accuracy: 0.6294
+Mean Intersection over Union(mIoU): 0.4717
+Mean F1 Score: 0.5753
+mIoU (exclude class 0): 0.5145   | mIoU (all): 0.4717
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5145
+Epoch time: 165.09s
+
+
+
+Epoch 14 Train Loss: 1.3036 | LR(bb/head): 0.000448 / 0.004484
+
+
+
+Validation Epoch 14:
+Pixel Accuracy: 0.8153
+Class Pixel Accuracy: [0.    0.95  0.745 0.06  0.897 0.762 0.973 0.546 0.441 0.867 0.848 0.451]
+Intersection over Union: [0.    0.886 0.712 0.045 0.846 0.579 0.797 0.319 0.23  0.671 0.144 0.296]
+Class F1 Score: [0.    0.94  0.832 0.086 0.917 0.733 0.887 0.483 0.374 0.803 0.252 0.457]
+Frequency Weighted Intersection over Union: 0.7213
+Mean Pixel Accuracy: 0.6283
+Mean Intersection over Union(mIoU): 0.4605
+Mean F1 Score: 0.5637
+mIoU (exclude class 0): 0.5023   | mIoU (all): 0.4605
+Epoch time: 164.15s
+
+
+
+Epoch 15 Train Loss: 1.2781 | LR(bb/head): 0.000442 / 0.004423
+
+
+
+Validation Epoch 15:
+Pixel Accuracy: 0.8313
+Class Pixel Accuracy: [0.    0.954 0.803 0.072 0.875 0.838 0.959 0.519 0.521 0.876 0.893 0.451]
+Intersection over Union: [0.    0.901 0.752 0.05  0.843 0.602 0.85  0.353 0.329 0.708 0.127 0.296]
+Class F1 Score: [0.    0.948 0.859 0.095 0.915 0.752 0.919 0.522 0.495 0.829 0.225 0.457]
+Frequency Weighted Intersection over Union: 0.7468
+Mean Pixel Accuracy: 0.6467
+Mean Intersection over Union(mIoU): 0.4843
+Mean F1 Score: 0.5846
+mIoU (exclude class 0): 0.5283   | mIoU (all): 0.4843
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5283
+Epoch time: 165.56s
+
+
+
+Epoch 16 Train Loss: 1.2490 | LR(bb/head): 0.000436 / 0.004361
+
+
+
+Validation Epoch 16:
+Pixel Accuracy: 0.8403
+Class Pixel Accuracy: [0.    0.953 0.805 0.077 0.874 0.873 0.972 0.512 0.47  0.896 0.855 0.684]
+Intersection over Union: [0.    0.905 0.763 0.058 0.85  0.62  0.822 0.369 0.308 0.709 0.172 0.411]
+Class F1 Score: [0.    0.95  0.865 0.109 0.919 0.766 0.902 0.539 0.47  0.83  0.293 0.583]
+Frequency Weighted Intersection over Union: 0.7512
+Mean Pixel Accuracy: 0.6641
+Mean Intersection over Union(mIoU): 0.4989
+Mean F1 Score: 0.6023
+mIoU (exclude class 0): 0.5442   | mIoU (all): 0.4989
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5442
+Epoch time: 165.47s
+
+
+
+Epoch 17 Train Loss: 1.2689 | LR(bb/head): 0.000430 / 0.004300
+
+
+
+Validation Epoch 17:
+Pixel Accuracy: 0.8390
+Class Pixel Accuracy: [0.    0.96  0.789 0.065 0.886 0.856 0.967 0.47  0.556 0.895 0.846 0.631]
+Intersection over Union: [0.    0.911 0.751 0.052 0.855 0.609 0.832 0.347 0.323 0.707 0.172 0.392]
+Class F1 Score: [0.    0.953 0.857 0.099 0.922 0.757 0.909 0.515 0.488 0.829 0.294 0.563]
+Frequency Weighted Intersection over Union: 0.7506
+Mean Pixel Accuracy: 0.6601
+Mean Intersection over Union(mIoU): 0.4960
+Mean F1 Score: 0.5989
+mIoU (exclude class 0): 0.5410   | mIoU (all): 0.4960
+Epoch time: 164.44s
+
+
+
+Epoch 18 Train Loss: 1.2229 | LR(bb/head): 0.000424 / 0.004239
+
+
+
+Validation Epoch 18:
+Pixel Accuracy: 0.8474
+Class Pixel Accuracy: [0.    0.961 0.797 0.123 0.888 0.881 0.965 0.597 0.603 0.904 0.86  0.664]
+Intersection over Union: [0.    0.908 0.759 0.077 0.866 0.651 0.859 0.397 0.354 0.709 0.172 0.392]
+Class F1 Score: [0.    0.952 0.863 0.143 0.928 0.788 0.924 0.568 0.523 0.83  0.293 0.564]
+Frequency Weighted Intersection over Union: 0.7652
+Mean Pixel Accuracy: 0.6870
+Mean Intersection over Union(mIoU): 0.5120
+Mean F1 Score: 0.6147
+mIoU (exclude class 0): 0.5586   | mIoU (all): 0.5120
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5586
+Epoch time: 165.19s
+
+
+
+Epoch 19 Train Loss: 1.1927 | LR(bb/head): 0.000418 / 0.004177
+
+
+
+Validation Epoch 19:
+Pixel Accuracy: 0.8413
+Class Pixel Accuracy: [0.    0.962 0.748 0.078 0.9   0.854 0.97  0.657 0.661 0.901 0.845 0.794]
+Intersection over Union: [0.    0.907 0.724 0.054 0.872 0.672 0.85  0.373 0.307 0.729 0.195 0.439]
+Class F1 Score: [0.    0.951 0.84  0.103 0.932 0.804 0.919 0.543 0.469 0.843 0.326 0.61 ]
+Frequency Weighted Intersection over Union: 0.7579
+Mean Pixel Accuracy: 0.6974
+Mean Intersection over Union(mIoU): 0.5100
+Mean F1 Score: 0.6116
+mIoU (exclude class 0): 0.5564   | mIoU (all): 0.5100
+Epoch time: 164.65s
+
+
+
+Epoch 20 Train Loss: 1.2091 | LR(bb/head): 0.000412 / 0.004115
+
+
+
+Validation Epoch 20:
+Pixel Accuracy: 0.8393
+Class Pixel Accuracy: [0.    0.965 0.752 0.113 0.888 0.893 0.961 0.687 0.633 0.895 0.881 0.723]
+Intersection over Union: [0.    0.909 0.727 0.066 0.873 0.694 0.841 0.37  0.307 0.704 0.173 0.41 ]
+Class F1 Score: [0.    0.952 0.842 0.124 0.932 0.819 0.913 0.54  0.47  0.826 0.294 0.581]
+Frequency Weighted Intersection over Union: 0.7583
+Mean Pixel Accuracy: 0.6993
+Mean Intersection over Union(mIoU): 0.5060
+Mean F1 Score: 0.6079
+mIoU (exclude class 0): 0.5520   | mIoU (all): 0.5060
+Epoch time: 164.54s
+
+
+
+Epoch 21 Train Loss: 1.1811 | LR(bb/head): 0.000405 / 0.004054
+
+
+
+Validation Epoch 21:
+Pixel Accuracy: 0.8562
+Class Pixel Accuracy: [0.    0.964 0.794 0.1   0.898 0.903 0.966 0.684 0.665 0.899 0.862 0.757]
+Intersection over Union: [0.    0.906 0.764 0.062 0.885 0.713 0.851 0.379 0.363 0.724 0.195 0.447]
+Class F1 Score: [0.    0.951 0.866 0.117 0.939 0.832 0.92  0.55  0.533 0.84  0.326 0.618]
+Frequency Weighted Intersection over Union: 0.7775
+Mean Pixel Accuracy: 0.7076
+Mean Intersection over Union(mIoU): 0.5240
+Mean F1 Score: 0.6242
+mIoU (exclude class 0): 0.5717   | mIoU (all): 0.5240
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5717
+Epoch time: 165.31s
+
+
+
+Epoch 22 Train Loss: 1.1607 | LR(bb/head): 0.000399 / 0.003992
+
+
+
+Validation Epoch 22:
+Pixel Accuracy: 0.8545
+Class Pixel Accuracy: [0.    0.953 0.79  0.108 0.905 0.906 0.973 0.716 0.611 0.913 0.887 0.65 ]
+Intersection over Union: [0.    0.909 0.763 0.069 0.89  0.721 0.85  0.354 0.361 0.7   0.166 0.396]
+Class F1 Score: [0.    0.952 0.866 0.13  0.942 0.838 0.919 0.522 0.531 0.824 0.285 0.568]
+Frequency Weighted Intersection over Union: 0.7778
+Mean Pixel Accuracy: 0.7009
+Mean Intersection over Union(mIoU): 0.5151
+Mean F1 Score: 0.6147
+mIoU (exclude class 0): 0.5619   | mIoU (all): 0.5151
+Epoch time: 177.18s
+
+
+
+Epoch 23 Train Loss: 1.1766 | LR(bb/head): 0.000393 / 0.003930
+
+
+
+Validation Epoch 23:
+Pixel Accuracy: 0.8496
+Class Pixel Accuracy: [0.    0.971 0.769 0.079 0.898 0.897 0.958 0.727 0.697 0.897 0.875 0.745]
+Intersection over Union: [0.    0.908 0.742 0.054 0.883 0.71  0.856 0.364 0.335 0.729 0.185 0.452]
+Class F1 Score: [0.    0.952 0.852 0.103 0.938 0.83  0.922 0.534 0.501 0.843 0.313 0.622]
+Frequency Weighted Intersection over Union: 0.7712
+Mean Pixel Accuracy: 0.7094
+Mean Intersection over Union(mIoU): 0.5182
+Mean F1 Score: 0.6176
+mIoU (exclude class 0): 0.5653   | mIoU (all): 0.5182
+Epoch time: 163.48s
+
+
+
+Epoch 24 Train Loss: 1.1695 | LR(bb/head): 0.000387 / 0.003868
+
+
+
+Validation Epoch 24:
+Pixel Accuracy: 0.8526
+Class Pixel Accuracy: [0.    0.963 0.77  0.123 0.905 0.907 0.965 0.662 0.669 0.899 0.88  0.757]
+Intersection over Union: [0.    0.913 0.745 0.07  0.89  0.709 0.836 0.397 0.341 0.722 0.203 0.473]
+Class F1 Score: [0.    0.955 0.854 0.132 0.942 0.83  0.911 0.568 0.508 0.839 0.337 0.642]
+Frequency Weighted Intersection over Union: 0.7721
+Mean Pixel Accuracy: 0.7084
+Mean Intersection over Union(mIoU): 0.5250
+Mean F1 Score: 0.6264
+mIoU (exclude class 0): 0.5727   | mIoU (all): 0.5250
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5727
+Epoch time: 164.99s
+
+
+
+Epoch 25 Train Loss: 1.1577 | LR(bb/head): 0.000381 / 0.003805
+
+
+
+Validation Epoch 25:
+Pixel Accuracy: 0.8632
+Class Pixel Accuracy: [0.    0.964 0.816 0.084 0.905 0.905 0.968 0.667 0.657 0.922 0.901 0.688]
+Intersection over Union: [0.    0.918 0.781 0.064 0.893 0.732 0.85  0.431 0.366 0.686 0.196 0.438]
+Class F1 Score: [0.    0.957 0.877 0.119 0.943 0.845 0.919 0.602 0.536 0.814 0.327 0.609]
+Frequency Weighted Intersection over Union: 0.7866
+Mean Pixel Accuracy: 0.7065
+Mean Intersection over Union(mIoU): 0.5296
+Mean F1 Score: 0.6292
+mIoU (exclude class 0): 0.5777   | mIoU (all): 0.5296
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5777
+Epoch time: 165.00s
+
+
+
+Epoch 26 Train Loss: 1.1472 | LR(bb/head): 0.000374 / 0.003743
+
+
+
+Validation Epoch 26:
+Pixel Accuracy: 0.8655
+Class Pixel Accuracy: [0.    0.958 0.83  0.129 0.903 0.912 0.96  0.693 0.652 0.886 0.911 0.723]
+Intersection over Union: [0.    0.917 0.785 0.085 0.893 0.738 0.863 0.41  0.386 0.746 0.186 0.436]
+Class F1 Score: [0.    0.957 0.88  0.156 0.943 0.849 0.927 0.581 0.557 0.855 0.313 0.607]
+Frequency Weighted Intersection over Union: 0.7919
+Mean Pixel Accuracy: 0.7130
+Mean Intersection over Union(mIoU): 0.5371
+Mean F1 Score: 0.6355
+mIoU (exclude class 0): 0.5859   | mIoU (all): 0.5371
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5859
+Epoch time: 165.34s
+
+
+
+Epoch 27 Train Loss: 1.1426 | LR(bb/head): 0.000368 / 0.003681
+
+
+
+Validation Epoch 27:
+Pixel Accuracy: 0.8595
+Class Pixel Accuracy: [0.    0.962 0.78  0.098 0.905 0.91  0.966 0.729 0.715 0.922 0.851 0.85 ]
+Intersection over Union: [0.    0.916 0.752 0.066 0.895 0.746 0.836 0.352 0.379 0.729 0.243 0.47 ]
+Class F1 Score: [0.    0.956 0.858 0.124 0.944 0.855 0.911 0.521 0.549 0.843 0.391 0.639]
+Frequency Weighted Intersection over Union: 0.7799
+Mean Pixel Accuracy: 0.7240
+Mean Intersection over Union(mIoU): 0.5320
+Mean F1 Score: 0.6327
+mIoU (exclude class 0): 0.5803   | mIoU (all): 0.5320
+Epoch time: 164.88s
+
+
+
+Epoch 28 Train Loss: 1.1855 | LR(bb/head): 0.000362 / 0.003618
+
+
+
+Validation Epoch 28:
+Pixel Accuracy: 0.8638
+Class Pixel Accuracy: [0.    0.967 0.799 0.116 0.91  0.918 0.97  0.71  0.625 0.925 0.896 0.783]
+Intersection over Union: [0.    0.912 0.77  0.078 0.901 0.746 0.834 0.402 0.365 0.723 0.212 0.483]
+Class F1 Score: [0.    0.954 0.87  0.144 0.948 0.855 0.909 0.573 0.535 0.839 0.349 0.651]
+Frequency Weighted Intersection over Union: 0.7857
+Mean Pixel Accuracy: 0.7183
+Mean Intersection over Union(mIoU): 0.5355
+Mean F1 Score: 0.6357
+mIoU (exclude class 0): 0.5842   | mIoU (all): 0.5355
+Epoch time: 164.95s
+
+
+
+Epoch 29 Train Loss: 1.1655 | LR(bb/head): 0.000356 / 0.003555
+
+
+
+Validation Epoch 29:
+Pixel Accuracy: 0.8659
+Class Pixel Accuracy: [0.    0.959 0.81  0.14  0.916 0.91  0.97  0.728 0.606 0.93  0.888 0.757]
+Intersection over Union: [0.    0.915 0.776 0.09  0.903 0.75  0.849 0.422 0.35  0.718 0.21  0.458]
+Class F1 Score: [0.    0.956 0.874 0.165 0.949 0.857 0.918 0.594 0.519 0.836 0.348 0.628]
+Frequency Weighted Intersection over Union: 0.7901
+Mean Pixel Accuracy: 0.7177
+Mean Intersection over Union(mIoU): 0.5368
+Mean F1 Score: 0.6370
+mIoU (exclude class 0): 0.5856   | mIoU (all): 0.5368
+Epoch time: 164.75s
+
+
+
+Epoch 30 Train Loss: 1.1465 | LR(bb/head): 0.000349 / 0.003493
+
+
+
+Validation Epoch 30:
+Pixel Accuracy: 0.8532
+Class Pixel Accuracy: [0.    0.962 0.76  0.091 0.896 0.914 0.948 0.725 0.832 0.906 0.844 0.887]
+Intersection over Union: [0.    0.911 0.74  0.06  0.884 0.721 0.861 0.39  0.345 0.754 0.257 0.483]
+Class F1 Score: [0.    0.953 0.85  0.113 0.939 0.838 0.925 0.561 0.513 0.86  0.409 0.651]
+Frequency Weighted Intersection over Union: 0.7752
+Mean Pixel Accuracy: 0.7304
+Mean Intersection over Union(mIoU): 0.5338
+Mean F1 Score: 0.6344
+mIoU (exclude class 0): 0.5823   | mIoU (all): 0.5338
+Epoch time: 164.59s
+
+
+
+Epoch 31 Train Loss: 1.1283 | LR(bb/head): 0.000343 / 0.003430
+
+
+
+Validation Epoch 31:
+Pixel Accuracy: 0.8638
+Class Pixel Accuracy: [0.    0.953 0.796 0.117 0.914 0.916 0.963 0.724 0.734 0.923 0.9   0.74 ]
+Intersection over Union: [0.    0.915 0.765 0.073 0.902 0.754 0.863 0.412 0.365 0.747 0.206 0.461]
+Class F1 Score: [0.    0.956 0.867 0.136 0.949 0.86  0.927 0.584 0.535 0.855 0.341 0.631]
+Frequency Weighted Intersection over Union: 0.7905
+Mean Pixel Accuracy: 0.7232
+Mean Intersection over Union(mIoU): 0.5386
+Mean F1 Score: 0.6366
+mIoU (exclude class 0): 0.5875   | mIoU (all): 0.5386
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5875
+Epoch time: 166.31s
+
+
+
+Epoch 32 Train Loss: 1.1138 | LR(bb/head): 0.000337 / 0.003367
+
+
+
+Validation Epoch 32:
+Pixel Accuracy: 0.8549
+Class Pixel Accuracy: [0.    0.964 0.739 0.107 0.931 0.882 0.971 0.715 0.736 0.929 0.895 0.807]
+Intersection over Union: [0.    0.914 0.724 0.065 0.908 0.733 0.84  0.403 0.342 0.701 0.224 0.51 ]
+Class F1 Score: [0.    0.955 0.84  0.123 0.952 0.846 0.913 0.575 0.51  0.824 0.366 0.676]
+Frequency Weighted Intersection over Union: 0.7752
+Mean Pixel Accuracy: 0.7229
+Mean Intersection over Union(mIoU): 0.5304
+Mean F1 Score: 0.6315
+mIoU (exclude class 0): 0.5786   | mIoU (all): 0.5304
+Epoch time: 164.38s
+
+
+
+Epoch 33 Train Loss: 1.1042 | LR(bb/head): 0.000330 / 0.003304
+
+
+
+Validation Epoch 33:
+Pixel Accuracy: 0.8662
+Class Pixel Accuracy: [0.    0.959 0.779 0.106 0.923 0.928 0.964 0.756 0.785 0.928 0.893 0.759]
+Intersection over Union: [0.    0.916 0.756 0.07  0.911 0.754 0.864 0.384 0.395 0.739 0.219 0.49 ]
+Class F1 Score: [0.    0.956 0.861 0.13  0.954 0.86  0.927 0.555 0.566 0.85  0.359 0.658]
+Frequency Weighted Intersection over Union: 0.7920
+Mean Pixel Accuracy: 0.7317
+Mean Intersection over Union(mIoU): 0.5413
+Mean F1 Score: 0.6395
+mIoU (exclude class 0): 0.5906   | mIoU (all): 0.5413
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5906
+Epoch time: 164.37s
+
+
+
+Epoch 34 Train Loss: 1.1265 | LR(bb/head): 0.000324 / 0.003240
+
+
+
+Validation Epoch 34:
+Pixel Accuracy: 0.8707
+Class Pixel Accuracy: [0.    0.965 0.807 0.115 0.907 0.937 0.956 0.761 0.761 0.92  0.844 0.889]
+Intersection over Union: [0.    0.917 0.777 0.078 0.9   0.757 0.871 0.392 0.401 0.744 0.262 0.486]
+Class F1 Score: [0.    0.957 0.874 0.144 0.947 0.862 0.931 0.563 0.573 0.853 0.415 0.654]
+Frequency Weighted Intersection over Union: 0.7965
+Mean Pixel Accuracy: 0.7385
+Mean Intersection over Union(mIoU): 0.5487
+Mean F1 Score: 0.6478
+mIoU (exclude class 0): 0.5986   | mIoU (all): 0.5487
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.5986
+Epoch time: 164.20s
+
+
+
+Epoch 35 Train Loss: 1.1199 | LR(bb/head): 0.000318 / 0.003177
+
+
+
+Validation Epoch 35:
+Pixel Accuracy: 0.8714
+Class Pixel Accuracy: [0.    0.967 0.803 0.104 0.924 0.91  0.969 0.772 0.716 0.918 0.894 0.797]
+Intersection over Union: [0.    0.917 0.777 0.073 0.913 0.768 0.855 0.374 0.396 0.746 0.225 0.5  ]
+Class F1 Score: [0.    0.957 0.874 0.137 0.954 0.869 0.922 0.545 0.568 0.854 0.367 0.666]
+Frequency Weighted Intersection over Union: 0.7982
+Mean Pixel Accuracy: 0.7312
+Mean Intersection over Union(mIoU): 0.5453
+Mean F1 Score: 0.6427
+mIoU (exclude class 0): 0.5948   | mIoU (all): 0.5453
+Epoch time: 164.91s
+
+
+
+Epoch 36 Train Loss: 1.1012 | LR(bb/head): 0.000311 / 0.003113
+
+
+
+Validation Epoch 36:
+Pixel Accuracy: 0.8728
+Class Pixel Accuracy: [0.    0.966 0.811 0.126 0.91  0.933 0.954 0.737 0.83  0.922 0.877 0.82 ]
+Intersection over Union: [0.    0.918 0.783 0.079 0.902 0.748 0.88  0.389 0.429 0.741 0.248 0.497]
+Class F1 Score: [0.    0.957 0.879 0.146 0.949 0.856 0.936 0.56  0.6   0.852 0.398 0.664]
+Frequency Weighted Intersection over Union: 0.8005
+Mean Pixel Accuracy: 0.7405
+Mean Intersection over Union(mIoU): 0.5513
+Mean F1 Score: 0.6497
+mIoU (exclude class 0): 0.6014   | mIoU (all): 0.5513
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6014
+Epoch time: 165.50s
+
+
+
+Epoch 37 Train Loss: 1.1113 | LR(bb/head): 0.000305 / 0.003049
+
+
+
+Validation Epoch 37:
+Pixel Accuracy: 0.8802
+Class Pixel Accuracy: [0.    0.965 0.826 0.129 0.923 0.93  0.96  0.741 0.788 0.919 0.882 0.851]
+Intersection over Union: [0.    0.922 0.795 0.088 0.913 0.758 0.88  0.421 0.438 0.751 0.252 0.529]
+Class F1 Score: [0.    0.96  0.886 0.162 0.954 0.862 0.936 0.593 0.609 0.858 0.402 0.692]
+Frequency Weighted Intersection over Union: 0.8094
+Mean Pixel Accuracy: 0.7428
+Mean Intersection over Union(mIoU): 0.5623
+Mean F1 Score: 0.6595
+mIoU (exclude class 0): 0.6134   | mIoU (all): 0.5623
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6134
+Epoch time: 165.69s
+
+
+
+Epoch 38 Train Loss: 1.0900 | LR(bb/head): 0.000299 / 0.002986
+
+
+
+Validation Epoch 38:
+Pixel Accuracy: 0.8772
+Class Pixel Accuracy: [0.    0.963 0.82  0.134 0.916 0.937 0.959 0.777 0.772 0.921 0.869 0.868]
+Intersection over Union: [0.    0.919 0.79  0.089 0.907 0.753 0.876 0.384 0.429 0.744 0.276 0.526]
+Class F1 Score: [0.    0.958 0.883 0.164 0.951 0.859 0.934 0.555 0.601 0.853 0.433 0.689]
+Frequency Weighted Intersection over Union: 0.8045
+Mean Pixel Accuracy: 0.7447
+Mean Intersection over Union(mIoU): 0.5578
+Mean F1 Score: 0.6566
+mIoU (exclude class 0): 0.6085   | mIoU (all): 0.5578
+Epoch time: 164.76s
+
+
+
+Epoch 39 Train Loss: 1.0810 | LR(bb/head): 0.000292 / 0.002922
+
+
+
+Validation Epoch 39:
+Pixel Accuracy: 0.8815
+Class Pixel Accuracy: [0.    0.959 0.831 0.124 0.922 0.947 0.973 0.711 0.696 0.9   0.865 0.877]
+Intersection over Union: [0.    0.918 0.803 0.086 0.916 0.776 0.857 0.443 0.399 0.771 0.272 0.535]
+Class F1 Score: [0.    0.957 0.891 0.158 0.956 0.874 0.923 0.614 0.571 0.871 0.428 0.697]
+Frequency Weighted Intersection over Union: 0.8094
+Mean Pixel Accuracy: 0.7337
+Mean Intersection over Union(mIoU): 0.5646
+Mean F1 Score: 0.6616
+mIoU (exclude class 0): 0.6159   | mIoU (all): 0.5646
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6159
+Epoch time: 165.35s
+
+
+
+Epoch 40 Train Loss: 1.0795 | LR(bb/head): 0.000286 / 0.002857
+
+
+
+Validation Epoch 40:
+Pixel Accuracy: 0.8784
+Class Pixel Accuracy: [0.    0.964 0.812 0.123 0.929 0.913 0.971 0.761 0.759 0.923 0.867 0.871]
+Intersection over Union: [0.    0.918 0.788 0.084 0.915 0.77  0.868 0.412 0.406 0.752 0.286 0.519]
+Class F1 Score: [0.    0.957 0.882 0.156 0.955 0.87  0.929 0.584 0.578 0.858 0.445 0.684]
+Frequency Weighted Intersection over Union: 0.8057
+Mean Pixel Accuracy: 0.7410
+Mean Intersection over Union(mIoU): 0.5599
+Mean F1 Score: 0.6581
+mIoU (exclude class 0): 0.6108   | mIoU (all): 0.5599
+Epoch time: 164.65s
+
+
+
+Epoch 41 Train Loss: 1.0846 | LR(bb/head): 0.000279 / 0.002793
+
+
+
+Validation Epoch 41:
+Pixel Accuracy: 0.8809
+Class Pixel Accuracy: [0.    0.966 0.828 0.174 0.923 0.933 0.973 0.724 0.665 0.925 0.888 0.899]
+Intersection over Union: [0.    0.916 0.8   0.105 0.914 0.764 0.861 0.437 0.433 0.741 0.258 0.533]
+Class F1 Score: [0.    0.956 0.889 0.189 0.955 0.866 0.925 0.608 0.604 0.852 0.41  0.696]
+Frequency Weighted Intersection over Union: 0.8078
+Mean Pixel Accuracy: 0.7415
+Mean Intersection over Union(mIoU): 0.5635
+Mean F1 Score: 0.6626
+mIoU (exclude class 0): 0.6148   | mIoU (all): 0.5635
+Epoch time: 165.03s
+
+
+
+Epoch 42 Train Loss: 1.0977 | LR(bb/head): 0.000273 / 0.002728
+
+
+
+Validation Epoch 42:
+Pixel Accuracy: 0.8810
+Class Pixel Accuracy: [0.    0.969 0.809 0.149 0.932 0.929 0.965 0.752 0.795 0.916 0.85  0.907]
+Intersection over Union: [0.    0.919 0.786 0.091 0.92  0.774 0.875 0.429 0.409 0.748 0.31  0.553]
+Class F1 Score: [0.    0.958 0.88  0.168 0.958 0.873 0.934 0.6   0.581 0.856 0.473 0.712]
+Frequency Weighted Intersection over Union: 0.8096
+Mean Pixel Accuracy: 0.7477
+Mean Intersection over Union(mIoU): 0.5679
+Mean F1 Score: 0.6660
+mIoU (exclude class 0): 0.6195   | mIoU (all): 0.5679
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6195
+Epoch time: 165.16s
+
+
+
+Epoch 43 Train Loss: 1.0795 | LR(bb/head): 0.000266 / 0.002664
+
+
+
+Validation Epoch 43:
+Pixel Accuracy: 0.8738
+Class Pixel Accuracy: [0.    0.967 0.795 0.151 0.924 0.931 0.969 0.766 0.748 0.933 0.892 0.857]
+Intersection over Union: [0.    0.917 0.775 0.088 0.914 0.765 0.861 0.365 0.42  0.725 0.259 0.539]
+Class F1 Score: [0.    0.957 0.873 0.162 0.955 0.867 0.925 0.535 0.591 0.84  0.411 0.701]
+Frequency Weighted Intersection over Union: 0.8003
+Mean Pixel Accuracy: 0.7445
+Mean Intersection over Union(mIoU): 0.5523
+Mean F1 Score: 0.6514
+mIoU (exclude class 0): 0.6025   | mIoU (all): 0.5523
+Epoch time: 163.96s
+
+
+
+Epoch 44 Train Loss: 1.0713 | LR(bb/head): 0.000260 / 0.002599
+
+
+
+Validation Epoch 44:
+Pixel Accuracy: 0.8822
+Class Pixel Accuracy: [0.    0.96  0.825 0.165 0.929 0.938 0.972 0.747 0.695 0.932 0.896 0.88 ]
+Intersection over Union: [0.    0.92  0.797 0.1   0.92  0.777 0.86  0.429 0.443 0.718 0.261 0.542]
+Class F1 Score: [0.    0.958 0.887 0.182 0.958 0.875 0.925 0.6   0.614 0.836 0.413 0.703]
+Frequency Weighted Intersection over Union: 0.8102
+Mean Pixel Accuracy: 0.7449
+Mean Intersection over Union(mIoU): 0.5638
+Mean F1 Score: 0.6626
+mIoU (exclude class 0): 0.6151   | mIoU (all): 0.5638
+Epoch time: 165.15s
+
+
+
+Epoch 45 Train Loss: 1.0839 | LR(bb/head): 0.000253 / 0.002534
+
+
+
+Validation Epoch 45:
+Pixel Accuracy: 0.8774
+Class Pixel Accuracy: [0.    0.963 0.81  0.149 0.921 0.938 0.969 0.754 0.784 0.917 0.881 0.833]
+Intersection over Union: [0.    0.922 0.787 0.093 0.915 0.779 0.868 0.42  0.406 0.759 0.258 0.519]
+Class F1 Score: [0.    0.959 0.881 0.17  0.955 0.875 0.929 0.591 0.578 0.863 0.41  0.683]
+Frequency Weighted Intersection over Union: 0.8065
+Mean Pixel Accuracy: 0.7433
+Mean Intersection over Union(mIoU): 0.5604
+Mean F1 Score: 0.6580
+mIoU (exclude class 0): 0.6113   | mIoU (all): 0.5604
+Epoch time: 164.94s
+
+
+
+Epoch 46 Train Loss: 1.0703 | LR(bb/head): 0.000247 / 0.002469
+
+
+
+Validation Epoch 46:
+Pixel Accuracy: 0.8782
+Class Pixel Accuracy: [0.    0.968 0.795 0.127 0.929 0.944 0.951 0.764 0.894 0.912 0.83  0.898]
+Intersection over Union: [0.    0.92  0.776 0.08  0.92  0.774 0.881 0.401 0.414 0.741 0.306 0.552]
+Class F1 Score: [0.    0.959 0.874 0.149 0.959 0.872 0.937 0.573 0.585 0.851 0.469 0.711]
+Frequency Weighted Intersection over Union: 0.8079
+Mean Pixel Accuracy: 0.7510
+Mean Intersection over Union(mIoU): 0.5639
+Mean F1 Score: 0.6616
+mIoU (exclude class 0): 0.6152   | mIoU (all): 0.5639
+Epoch time: 163.96s
+
+
+
+Epoch 47 Train Loss: 1.0884 | LR(bb/head): 0.000240 / 0.002403
+
+
+
+Validation Epoch 47:
+Pixel Accuracy: 0.8842
+Class Pixel Accuracy: [0.    0.964 0.827 0.145 0.923 0.938 0.964 0.764 0.833 0.924 0.872 0.879]
+Intersection over Union: [0.    0.922 0.802 0.094 0.917 0.785 0.879 0.439 0.442 0.74  0.29  0.532]
+Class F1 Score: [0.    0.959 0.89  0.171 0.957 0.879 0.935 0.61  0.613 0.851 0.45  0.695]
+Frequency Weighted Intersection over Union: 0.8149
+Mean Pixel Accuracy: 0.7528
+Mean Intersection over Union(mIoU): 0.5701
+Mean F1 Score: 0.6676
+mIoU (exclude class 0): 0.6220   | mIoU (all): 0.5701
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6220
+Epoch time: 164.52s
+
+
+
+Epoch 48 Train Loss: 1.0720 | LR(bb/head): 0.000234 / 0.002338
+
+
+
+Validation Epoch 48:
+Pixel Accuracy: 0.8792
+Class Pixel Accuracy: [0.    0.969 0.814 0.139 0.921 0.936 0.965 0.758 0.785 0.925 0.885 0.869]
+Intersection over Union: [0.    0.92  0.791 0.087 0.913 0.778 0.866 0.429 0.425 0.752 0.28  0.517]
+Class F1 Score: [0.    0.958 0.883 0.16  0.955 0.875 0.928 0.601 0.596 0.858 0.438 0.681]
+Frequency Weighted Intersection over Union: 0.8074
+Mean Pixel Accuracy: 0.7473
+Mean Intersection over Union(mIoU): 0.5632
+Mean F1 Score: 0.6612
+mIoU (exclude class 0): 0.6144   | mIoU (all): 0.5632
+Epoch time: 163.86s
+
+
+
+Epoch 49 Train Loss: 1.0736 | LR(bb/head): 0.000227 / 0.002272
+
+
+
+Validation Epoch 49:
+Pixel Accuracy: 0.8777
+Class Pixel Accuracy: [0.    0.968 0.782 0.13  0.94  0.941 0.958 0.744 0.859 0.913 0.883 0.879]
+Intersection over Union: [0.    0.92  0.766 0.08  0.93  0.782 0.869 0.404 0.421 0.741 0.268 0.564]
+Class F1 Score: [0.    0.958 0.868 0.149 0.964 0.878 0.93  0.575 0.593 0.851 0.423 0.721]
+Frequency Weighted Intersection over Union: 0.8069
+Mean Pixel Accuracy: 0.7498
+Mean Intersection over Union(mIoU): 0.5622
+Mean F1 Score: 0.6592
+mIoU (exclude class 0): 0.6133   | mIoU (all): 0.5622
+Epoch time: 163.68s
+
+
+
+Epoch 50 Train Loss: 1.0804 | LR(bb/head): 0.000221 / 0.002206
+
+
+
+Validation Epoch 50:
+Pixel Accuracy: 0.8764
+Class Pixel Accuracy: [0.    0.967 0.783 0.15  0.934 0.937 0.967 0.767 0.816 0.919 0.864 0.882]
+Intersection over Union: [0.    0.92  0.765 0.088 0.925 0.791 0.865 0.382 0.393 0.76  0.303 0.557]
+Class F1 Score: [0.    0.958 0.867 0.162 0.961 0.884 0.928 0.553 0.564 0.864 0.465 0.716]
+Frequency Weighted Intersection over Union: 0.8050
+Mean Pixel Accuracy: 0.7490
+Mean Intersection over Union(mIoU): 0.5625
+Mean F1 Score: 0.6601
+mIoU (exclude class 0): 0.6137   | mIoU (all): 0.5625
+Epoch time: 163.71s
+
+
+
+Epoch 51 Train Loss: 1.0450 | LR(bb/head): 0.000214 / 0.002139
+
+
+
+Validation Epoch 51:
+Pixel Accuracy: 0.8802
+Class Pixel Accuracy: [0.    0.97  0.799 0.135 0.935 0.935 0.953 0.736 0.875 0.914 0.888 0.885]
+Intersection over Union: [0.    0.921 0.781 0.084 0.925 0.785 0.88  0.422 0.408 0.758 0.284 0.564]
+Class F1 Score: [0.    0.959 0.877 0.156 0.961 0.88  0.936 0.594 0.58  0.862 0.442 0.721]
+Frequency Weighted Intersection over Union: 0.8116
+Mean Pixel Accuracy: 0.7521
+Mean Intersection over Union(mIoU): 0.5677
+Mean F1 Score: 0.6639
+mIoU (exclude class 0): 0.6193   | mIoU (all): 0.5677
+Epoch time: 163.79s
+
+
+
+Epoch 52 Train Loss: 1.0592 | LR(bb/head): 0.000207 / 0.002073
+
+
+
+Validation Epoch 52:
+Pixel Accuracy: 0.8862
+Class Pixel Accuracy: [0.    0.966 0.835 0.14  0.926 0.941 0.968 0.781 0.747 0.925 0.906 0.887]
+Intersection over Union: [0.    0.923 0.809 0.098 0.919 0.786 0.874 0.411 0.455 0.755 0.268 0.538]
+Class F1 Score: [0.    0.96  0.894 0.179 0.958 0.88  0.933 0.582 0.625 0.86  0.423 0.699]
+Frequency Weighted Intersection over Union: 0.8170
+Mean Pixel Accuracy: 0.7518
+Mean Intersection over Union(mIoU): 0.5695
+Mean F1 Score: 0.6661
+mIoU (exclude class 0): 0.6213   | mIoU (all): 0.5695
+Epoch time: 163.58s
+
+
+
+Epoch 53 Train Loss: 1.0627 | LR(bb/head): 0.000201 / 0.002006
+
+
+
+Validation Epoch 53:
+Pixel Accuracy: 0.8744
+Class Pixel Accuracy: [0.    0.966 0.784 0.11  0.922 0.952 0.961 0.747 0.869 0.92  0.889 0.877]
+Intersection over Union: [0.    0.919 0.767 0.069 0.917 0.781 0.868 0.398 0.408 0.751 0.284 0.546]
+Class F1 Score: [0.    0.958 0.868 0.129 0.957 0.877 0.929 0.57  0.58  0.858 0.442 0.706]
+Frequency Weighted Intersection over Union: 0.8025
+Mean Pixel Accuracy: 0.7497
+Mean Intersection over Union(mIoU): 0.5590
+Mean F1 Score: 0.6561
+mIoU (exclude class 0): 0.6098   | mIoU (all): 0.5590
+Epoch time: 163.41s
+
+
+
+Epoch 54 Train Loss: 1.0791 | LR(bb/head): 0.000194 / 0.001939
+
+
+
+Validation Epoch 54:
+Pixel Accuracy: 0.8829
+Class Pixel Accuracy: [0.    0.966 0.804 0.103 0.934 0.952 0.957 0.716 0.884 0.913 0.866 0.906]
+Intersection over Union: [0.    0.919 0.786 0.073 0.927 0.786 0.868 0.432 0.423 0.772 0.312 0.573]
+Class F1 Score: [0.    0.958 0.88  0.136 0.962 0.88  0.929 0.603 0.595 0.871 0.475 0.729]
+Frequency Weighted Intersection over Union: 0.8127
+Mean Pixel Accuracy: 0.7500
+Mean Intersection over Union(mIoU): 0.5727
+Mean F1 Score: 0.6683
+mIoU (exclude class 0): 0.6247   | mIoU (all): 0.5727
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6247
+Epoch time: 163.98s
+
+
+
+Epoch 55 Train Loss: 1.0649 | LR(bb/head): 0.000187 / 0.001872
+
+
+
+Validation Epoch 55:
+Pixel Accuracy: 0.8811
+Class Pixel Accuracy: [0.    0.965 0.803 0.16  0.93  0.952 0.966 0.74  0.795 0.902 0.877 0.926]
+Intersection over Union: [0.    0.919 0.785 0.09  0.924 0.789 0.859 0.426 0.428 0.784 0.301 0.544]
+Class F1 Score: [0.    0.958 0.879 0.166 0.961 0.882 0.924 0.597 0.599 0.879 0.463 0.704]
+Frequency Weighted Intersection over Union: 0.8099
+Mean Pixel Accuracy: 0.7514
+Mean Intersection over Union(mIoU): 0.5708
+Mean F1 Score: 0.6678
+mIoU (exclude class 0): 0.6226   | mIoU (all): 0.5708
+Epoch time: 163.42s
+
+
+
+Epoch 56 Train Loss: 1.0571 | LR(bb/head): 0.000180 / 0.001805
+
+
+
+Validation Epoch 56:
+Pixel Accuracy: 0.8788
+Class Pixel Accuracy: [0.    0.971 0.799 0.13  0.924 0.946 0.963 0.778 0.835 0.917 0.897 0.879]
+Intersection over Union: [0.    0.921 0.782 0.081 0.919 0.788 0.869 0.429 0.415 0.757 0.281 0.54 ]
+Class F1 Score: [0.    0.959 0.878 0.15  0.958 0.882 0.93  0.601 0.586 0.862 0.438 0.701]
+Frequency Weighted Intersection over Union: 0.8084
+Mean Pixel Accuracy: 0.7533
+Mean Intersection over Union(mIoU): 0.5652
+Mean F1 Score: 0.6621
+mIoU (exclude class 0): 0.6166   | mIoU (all): 0.5652
+Epoch time: 163.27s
+
+
+Epoch 57 Train Loss: 1.0566 | LR(bb/head): 0.000174 / 0.001737
+
+
+
+Validation Epoch 57:
+Pixel Accuracy: 0.8829
+Class Pixel Accuracy: [0.    0.964 0.818 0.137 0.927 0.953 0.956 0.782 0.853 0.921 0.912 0.835]
+Intersection over Union: [0.    0.922 0.795 0.091 0.922 0.788 0.882 0.419 0.446 0.767 0.252 0.529]
+Class F1 Score: [0.    0.96  0.886 0.167 0.959 0.882 0.937 0.59  0.617 0.868 0.403 0.692]
+Frequency Weighted Intersection over Union: 0.8154
+Mean Pixel Accuracy: 0.7548
+Mean Intersection over Union(mIoU): 0.5678
+Mean F1 Score: 0.6634
+mIoU (exclude class 0): 0.6194   | mIoU (all): 0.5678
+Epoch time: 163.42s
+
+
+
+
+Validation Epoch 58:
+Pixel Accuracy: 0.8824
+Class Pixel Accuracy: [0.    0.97  0.811 0.118 0.924 0.946 0.959 0.776 0.87  0.92  0.874 0.894]
+Intersection over Union: [0.    0.921 0.791 0.075 0.919 0.792 0.878 0.427 0.422 0.761 0.311 0.552]
+Class F1 Score: [0.    0.959 0.883 0.14  0.958 0.884 0.935 0.599 0.593 0.864 0.475 0.711]
+Frequency Weighted Intersection over Union: 0.8132
+Mean Pixel Accuracy: 0.7552
+Mean Intersection over Union(mIoU): 0.5708
+Mean F1 Score: 0.6667
+mIoU (exclude class 0): 0.6226   | mIoU (all): 0.5708
+Epoch time: 163.31s
+
+
+
+Epoch 59 Train Loss: 1.0370 | LR(bb/head): 0.000160 / 0.001600
+
+
+
+Validation Epoch 59:
+Pixel Accuracy: 0.8886
+Class Pixel Accuracy: [0.    0.967 0.838 0.161 0.933 0.947 0.971 0.747 0.706 0.921 0.911 0.875]
+Intersection over Union: [0.    0.922 0.81  0.104 0.927 0.799 0.866 0.458 0.441 0.766 0.272 0.539]
+Class F1 Score: [0.    0.959 0.895 0.189 0.962 0.888 0.928 0.628 0.612 0.868 0.428 0.7  ]
+Frequency Weighted Intersection over Union: 0.8197
+Mean Pixel Accuracy: 0.7481
+Mean Intersection over Union(mIoU): 0.5753
+Mean F1 Score: 0.6715
+mIoU (exclude class 0): 0.6276   | mIoU (all): 0.5753
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6276
+Epoch time: 163.81s
+
+
+
+Epoch 60 Train Loss: 1.0509 | LR(bb/head): 0.000153 / 0.001532
+
+
+
+Validation Epoch 60:
+Pixel Accuracy: 0.8804
+Class Pixel Accuracy: [0.    0.971 0.801 0.107 0.927 0.951 0.956 0.742 0.882 0.914 0.876 0.897]
+Intersection over Union: [0.    0.921 0.783 0.068 0.921 0.787 0.869 0.443 0.416 0.769 0.32  0.551]
+Class F1 Score: [0.    0.959 0.878 0.128 0.959 0.881 0.93  0.614 0.588 0.869 0.485 0.711]
+Frequency Weighted Intersection over Union: 0.8098
+Mean Pixel Accuracy: 0.7520
+Mean Intersection over Union(mIoU): 0.5706
+Mean F1 Score: 0.6667
+mIoU (exclude class 0): 0.6225   | mIoU (all): 0.5706
+Epoch time: 163.31s
+
+
+
+Epoch 61 Train Loss: 1.0354 | LR(bb/head): 0.000146 / 0.001463
+
+
+
+Validation Epoch 61:
+Pixel Accuracy: 0.8861
+Class Pixel Accuracy: [0.    0.969 0.817 0.152 0.931 0.959 0.96  0.768 0.849 0.911 0.903 0.876]
+Intersection over Union: [0.    0.922 0.797 0.097 0.926 0.789 0.881 0.438 0.459 0.778 0.262 0.552]
+Class F1 Score: [0.    0.959 0.887 0.177 0.962 0.882 0.937 0.609 0.629 0.875 0.416 0.712]
+Frequency Weighted Intersection over Union: 0.8186
+Mean Pixel Accuracy: 0.7580
+Mean Intersection over Union(mIoU): 0.5752
+Mean F1 Score: 0.6704
+mIoU (exclude class 0): 0.6275   | mIoU (all): 0.5752
+Epoch time: 162.78s
+
+
+
+Epoch 62 Train Loss: 1.0367 | LR(bb/head): 0.000139 / 0.001393
+
+
+
+Validation Epoch 62:
+Pixel Accuracy: 0.8829
+Class Pixel Accuracy: [0.    0.971 0.797 0.147 0.938 0.951 0.959 0.757 0.851 0.92  0.883 0.905]
+Intersection over Union: [0.    0.921 0.779 0.091 0.931 0.795 0.874 0.43  0.428 0.754 0.312 0.551]
+Class F1 Score: [0.    0.959 0.876 0.167 0.964 0.886 0.933 0.601 0.599 0.86  0.476 0.711]
+Frequency Weighted Intersection over Union: 0.8132
+Mean Pixel Accuracy: 0.7567
+Mean Intersection over Union(mIoU): 0.5721
+Mean F1 Score: 0.6692
+mIoU (exclude class 0): 0.6241   | mIoU (all): 0.5721
+Epoch time: 163.51s
+
+
+
+Epoch 63 Train Loss: 1.0334 | LR(bb/head): 0.000132 / 0.001323
+
+
+
+Validation Epoch 63:
+Pixel Accuracy: 0.8883
+Class Pixel Accuracy: [0.    0.971 0.824 0.128 0.939 0.944 0.964 0.779 0.826 0.921 0.907 0.845]
+Intersection over Union: [0.    0.921 0.803 0.086 0.932 0.81  0.874 0.418 0.452 0.775 0.266 0.55 ]
+Class F1 Score: [0.    0.959 0.891 0.159 0.965 0.895 0.933 0.589 0.623 0.873 0.42  0.709]
+Frequency Weighted Intersection over Union: 0.8218
+Mean Pixel Accuracy: 0.7539
+Mean Intersection over Union(mIoU): 0.5739
+Mean F1 Score: 0.6680
+mIoU (exclude class 0): 0.6261   | mIoU (all): 0.5739
+Epoch time: 162.96s
+
+
+
+Epoch 64 Train Loss: 1.0367 | LR(bb/head): 0.000125 / 0.001253
+
+
+
+Validation Epoch 64:
+Pixel Accuracy: 0.8902
+Class Pixel Accuracy: [0.    0.969 0.826 0.118 0.939 0.947 0.956 0.762 0.876 0.904 0.881 0.905]
+Intersection over Union: [0.    0.924 0.805 0.08  0.931 0.8   0.885 0.445 0.451 0.791 0.312 0.555]
+Class F1 Score: [0.    0.96  0.892 0.148 0.964 0.889 0.939 0.616 0.621 0.883 0.476 0.714]
+Frequency Weighted Intersection over Union: 0.8238
+Mean Pixel Accuracy: 0.7570
+Mean Intersection over Union(mIoU): 0.5815
+Mean F1 Score: 0.6752
+mIoU (exclude class 0): 0.6344   | mIoU (all): 0.5815
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6344
+Epoch time: 163.91s
+
+
+
+Epoch 65 Train Loss: 1.0380 | LR(bb/head): 0.000118 / 0.001182
+
+
+
+Validation Epoch 65:
+Pixel Accuracy: 0.8883
+Class Pixel Accuracy: [0.    0.967 0.826 0.138 0.93  0.948 0.963 0.781 0.851 0.92  0.878 0.908]
+Intersection over Union: [0.    0.922 0.805 0.089 0.925 0.8   0.875 0.447 0.443 0.766 0.33  0.561]
+Class F1 Score: [0.    0.959 0.892 0.164 0.961 0.889 0.933 0.618 0.614 0.868 0.496 0.719]
+Frequency Weighted Intersection over Union: 0.8200
+Mean Pixel Accuracy: 0.7592
+Mean Intersection over Union(mIoU): 0.5803
+Mean F1 Score: 0.6761
+mIoU (exclude class 0): 0.6330   | mIoU (all): 0.5803
+Epoch time: 163.20s
+
+
+
+Epoch 66 Train Loss: 1.0454 | LR(bb/head): 0.000111 / 0.001111
+
+
+
+Validation Epoch 66:
+Pixel Accuracy: 0.8857
+Class Pixel Accuracy: [0.    0.966 0.814 0.141 0.933 0.95  0.956 0.768 0.885 0.913 0.883 0.909]
+Intersection over Union: [0.    0.923 0.794 0.089 0.927 0.804 0.882 0.461 0.422 0.774 0.317 0.549]
+Class F1 Score: [0.    0.96  0.885 0.164 0.962 0.892 0.937 0.631 0.594 0.873 0.482 0.709]
+Frequency Weighted Intersection over Union: 0.8188
+Mean Pixel Accuracy: 0.7598
+Mean Intersection over Union(mIoU): 0.5785
+Mean F1 Score: 0.6740
+mIoU (exclude class 0): 0.6311   | mIoU (all): 0.5785
+Epoch time: 163.23s
+
+
+
+Epoch 67 Train Loss: 1.0264 | LR(bb/head): 0.000104 / 0.001040
+
+
+
+Validation Epoch 67:
+Pixel Accuracy: 0.8896
+Class Pixel Accuracy: [0.    0.971 0.834 0.155 0.933 0.95  0.965 0.766 0.783 0.934 0.909 0.871]
+Intersection over Union: [0.    0.924 0.81  0.103 0.928 0.8   0.877 0.479 0.442 0.752 0.275 0.558]
+Class F1 Score: [0.    0.96  0.895 0.187 0.962 0.889 0.935 0.648 0.613 0.858 0.432 0.716]
+Frequency Weighted Intersection over Union: 0.8224
+Mean Pixel Accuracy: 0.7559
+Mean Intersection over Union(mIoU): 0.5790
+Mean F1 Score: 0.6747
+mIoU (exclude class 0): 0.6317   | mIoU (all): 0.5790
+Epoch time: 162.77s
+
+
+
+Epoch 68 Train Loss: 1.0333 | LR(bb/head): 0.000097 / 0.000967
+
+
+
+Validation Epoch 68:
+Pixel Accuracy: 0.8863
+Class Pixel Accuracy: [0.    0.97  0.817 0.158 0.93  0.954 0.964 0.79  0.832 0.928 0.883 0.883]
+Intersection over Union: [0.    0.923 0.796 0.095 0.926 0.799 0.879 0.427 0.438 0.752 0.309 0.561]
+Class F1 Score: [0.    0.96  0.886 0.173 0.962 0.888 0.936 0.599 0.61  0.858 0.472 0.719]
+Frequency Weighted Intersection over Union: 0.8180
+Mean Pixel Accuracy: 0.7591
+Mean Intersection over Union(mIoU): 0.5754
+Mean F1 Score: 0.6718
+mIoU (exclude class 0): 0.6277   | mIoU (all): 0.5754
+Epoch time: 163.00s
+
+
+
+Epoch 69 Train Loss: 1.0347 | LR(bb/head): 0.000089 / 0.000895
+
+
+
+Validation Epoch 69:
+Pixel Accuracy: 0.8875
+Class Pixel Accuracy: [0.    0.966 0.818 0.134 0.941 0.932 0.969 0.749 0.808 0.919 0.875 0.914]
+Intersection over Union: [0.    0.922 0.797 0.088 0.931 0.806 0.869 0.452 0.433 0.763 0.313 0.55 ]
+Class F1 Score: [0.    0.959 0.887 0.161 0.964 0.892 0.93  0.623 0.604 0.866 0.477 0.71 ]
+Frequency Weighted Intersection over Union: 0.8186
+Mean Pixel Accuracy: 0.7521
+Mean Intersection over Union(mIoU): 0.5769
+Mean F1 Score: 0.6727
+mIoU (exclude class 0): 0.6293   | mIoU (all): 0.5769
+Epoch time: 163.45s
+
+
+
+Epoch 70 Train Loss: 1.0328 | LR(bb/head): 0.000082 / 0.000821
+
+
+
+Validation Epoch 70:
+Pixel Accuracy: 0.8872
+Class Pixel Accuracy: [0.    0.971 0.825 0.134 0.928 0.953 0.949 0.777 0.885 0.914 0.866 0.919]
+Intersection over Union: [0.    0.922 0.803 0.082 0.924 0.797 0.883 0.457 0.442 0.777 0.332 0.539]
+Class F1 Score: [0.    0.96  0.89  0.152 0.96  0.887 0.938 0.627 0.613 0.874 0.498 0.701]
+Frequency Weighted Intersection over Union: 0.8199
+Mean Pixel Accuracy: 0.7602
+Mean Intersection over Union(mIoU): 0.5798
+Mean F1 Score: 0.6750
+mIoU (exclude class 0): 0.6325   | mIoU (all): 0.5798
+Epoch time: 163.85s
+
+
+
+Epoch 71 Train Loss: 1.0366 | LR(bb/head): 0.000075 / 0.000747
+
+
+
+Validation Epoch 71:
+Pixel Accuracy: 0.8889
+Class Pixel Accuracy: [0.    0.975 0.827 0.163 0.934 0.952 0.962 0.775 0.795 0.923 0.893 0.903]
+Intersection over Union: [0.    0.92  0.803 0.104 0.928 0.796 0.878 0.445 0.454 0.763 0.289 0.564]
+Class F1 Score: [0.    0.958 0.891 0.188 0.963 0.887 0.935 0.616 0.624 0.866 0.449 0.721]
+Frequency Weighted Intersection over Union: 0.8207
+Mean Pixel Accuracy: 0.7584
+Mean Intersection over Union(mIoU): 0.5787
+Mean F1 Score: 0.6748
+mIoU (exclude class 0): 0.6314   | mIoU (all): 0.5787
+Epoch time: 163.99s
+
+
+
+Epoch 72 Train Loss: 1.0349 | LR(bb/head): 0.000067 / 0.000672
+
+
+
+Validation Epoch 72:
+Pixel Accuracy: 0.8817
+Class Pixel Accuracy: [0.    0.969 0.8   0.149 0.933 0.958 0.946 0.771 0.91  0.916 0.886 0.877]
+Intersection over Union: [0.    0.923 0.782 0.089 0.928 0.794 0.881 0.437 0.411 0.775 0.295 0.566]
+Class F1 Score: [0.    0.96  0.878 0.164 0.963 0.885 0.937 0.608 0.583 0.873 0.456 0.723]
+Frequency Weighted Intersection over Union: 0.8146
+Mean Pixel Accuracy: 0.7595
+Mean Intersection over Union(mIoU): 0.5735
+Mean F1 Score: 0.6691
+mIoU (exclude class 0): 0.6256   | mIoU (all): 0.5735
+Epoch time: 163.97s
+
+
+
+Epoch 73 Train Loss: 1.0228 | LR(bb/head): 0.000060 / 0.000596
+
+
+
+Validation Epoch 73:
+Pixel Accuracy: 0.8852
+Class Pixel Accuracy: [0.    0.968 0.811 0.124 0.931 0.957 0.948 0.776 0.915 0.927 0.869 0.91 ]
+Intersection over Union: [0.    0.922 0.792 0.081 0.927 0.8   0.883 0.45  0.421 0.756 0.329 0.57 ]
+Class F1 Score: [0.    0.96  0.884 0.15  0.962 0.889 0.938 0.621 0.592 0.861 0.495 0.726]
+Frequency Weighted Intersection over Union: 0.8180
+Mean Pixel Accuracy: 0.7614
+Mean Intersection over Union(mIoU): 0.5777
+Mean F1 Score: 0.6732
+mIoU (exclude class 0): 0.6302   | mIoU (all): 0.5777
+Epoch time: 164.20s
+
+
+
+Epoch 74 Train Loss: 1.0283 | LR(bb/head): 0.000052 / 0.000519
+
+
+
+Validation Epoch 74:
+Pixel Accuracy: 0.8869
+Class Pixel Accuracy: [0.    0.968 0.813 0.13  0.937 0.952 0.959 0.747 0.867 0.916 0.871 0.916]
+Intersection over Union: [0.    0.921 0.793 0.082 0.931 0.797 0.874 0.437 0.44  0.775 0.325 0.571]
+Class F1 Score: [0.    0.959 0.885 0.152 0.964 0.887 0.933 0.609 0.611 0.873 0.491 0.727]
+Frequency Weighted Intersection over Union: 0.8182
+Mean Pixel Accuracy: 0.7563
+Mean Intersection over Union(mIoU): 0.5789
+Mean F1 Score: 0.6742
+mIoU (exclude class 0): 0.6315   | mIoU (all): 0.5789
+Epoch time: 164.24s
+
+
+
+Epoch 75 Train Loss: 1.0383 | LR(bb/head): 0.000044 / 0.000440
+
+
+
+Validation Epoch 75:
+Pixel Accuracy: 0.8898
+Class Pixel Accuracy: [0.    0.971 0.835 0.118 0.931 0.947 0.948 0.762 0.897 0.922 0.873 0.896]
+Intersection over Union: [0.    0.923 0.81  0.081 0.927 0.804 0.884 0.467 0.431 0.765 0.326 0.571]
+Class F1 Score: [0.    0.96  0.895 0.149 0.962 0.891 0.939 0.636 0.602 0.867 0.491 0.727]
+Frequency Weighted Intersection over Union: 0.8240
+Mean Pixel Accuracy: 0.7584
+Mean Intersection over Union(mIoU): 0.5823
+Mean F1 Score: 0.6767
+mIoU (exclude class 0): 0.6353   | mIoU (all): 0.5823
+Saved best model (./checkpoint_deeplabv3plus\deeplabv3plus_resnet50_cbam_dice_best.pth) | mIoU: 0.6353
+Epoch time: 165.20s
+
+
+
+Epoch 76 Train Loss: 1.0107 | LR(bb/head): 0.000036 / 0.000361
+
+
+
+Validation Epoch 76:
+Pixel Accuracy: 0.8862
+Class Pixel Accuracy: [0.    0.968 0.816 0.108 0.929 0.957 0.956 0.75  0.899 0.918 0.874 0.901]
+Intersection over Union: [0.    0.923 0.797 0.072 0.925 0.794 0.88  0.464 0.432 0.772 0.315 0.568]
+Class F1 Score: [0.    0.96  0.887 0.135 0.961 0.885 0.936 0.634 0.604 0.871 0.479 0.724]
+Frequency Weighted Intersection over Union: 0.8183
+Mean Pixel Accuracy: 0.7565
+Mean Intersection over Union(mIoU): 0.5784
+Mean F1 Score: 0.6730
+mIoU (exclude class 0): 0.6310   | mIoU (all): 0.5784
+Epoch time: 163.75s
+
+
+
+Epoch 77 Train Loss: 1.0268 | LR(bb/head): 0.000028 / 0.000279
+
+
+Validation Epoch 77:
+Pixel Accuracy: 0.8817
+Class Pixel Accuracy: [0.    0.966 0.8   0.114 0.93  0.95  0.953 0.775 0.906 0.921 0.856 0.925]
+Intersection over Union: [0.    0.921 0.783 0.072 0.925 0.8   0.875 0.432 0.413 0.763 0.338 0.554]
+Class F1 Score: [0.    0.959 0.878 0.135 0.961 0.889 0.933 0.603 0.584 0.866 0.505 0.713]
+Frequency Weighted Intersection over Union: 0.8130
+Mean Pixel Accuracy: 0.7581
+Mean Intersection over Union(mIoU): 0.5730
+Mean F1 Score: 0.6689
+mIoU (exclude class 0): 0.6251   | mIoU (all): 0.5730
+Epoch time: 163.14s
+
+
+
+Epoch 78 Train Loss: 1.0499 | LR(bb/head): 0.000019 / 0.000194
+
+
+
+Validation Epoch 78:
+Pixel Accuracy: 0.8868
+Class Pixel Accuracy: [0.    0.963 0.818 0.134 0.932 0.948 0.963 0.778 0.856 0.923 0.887 0.91 ]
+Intersection over Union: [0.    0.921 0.797 0.086 0.927 0.808 0.877 0.424 0.447 0.765 0.304 0.55 ]
+Class F1 Score: [0.    0.959 0.887 0.158 0.962 0.894 0.934 0.595 0.618 0.867 0.466 0.71 ]
+Frequency Weighted Intersection over Union: 0.8190
+Mean Pixel Accuracy: 0.7593
+Mean Intersection over Union(mIoU): 0.5754
+Mean F1 Score: 0.6708
+mIoU (exclude class 0): 0.6278   | mIoU (all): 0.5754
+Epoch time: 163.32s
+
+
+
+Epoch 79 Train Loss: 1.0296 | LR(bb/head): 0.000010 / 0.000104
+
+
+
+Validation Epoch 79:
+Pixel Accuracy: 0.8833
+Class Pixel Accuracy: [0.    0.967 0.801 0.149 0.936 0.947 0.964 0.767 0.849 0.922 0.885 0.902]
+Intersection over Union: [0.    0.918 0.783 0.088 0.93  0.804 0.866 0.423 0.431 0.768 0.304 0.568]
+Class F1 Score: [0.    0.957 0.878 0.162 0.964 0.892 0.928 0.595 0.603 0.869 0.466 0.725]
+Frequency Weighted Intersection over Union: 0.8138
+Mean Pixel Accuracy: 0.7574
+Mean Intersection over Union(mIoU): 0.5736
+Mean F1 Score: 0.6698
+mIoU (exclude class 0): 0.6258   | mIoU (all): 0.5736
+Epoch time: 163.14s
+
+
+
+Epoch 80 Train Loss: 1.0358 | LR(bb/head): 0.000000 / 0.000002
+
+
+
+Validation Epoch 80:
+Pixel Accuracy: 0.8882
+Class Pixel Accuracy: [0.    0.967 0.821 0.146 0.935 0.959 0.951 0.749 0.898 0.908 0.893 0.893]
+Intersection over Union: [0.    0.923 0.801 0.09  0.93  0.795 0.886 0.473 0.451 0.787 0.276 0.567]
+Class F1 Score: [0.    0.96  0.889 0.166 0.964 0.886 0.939 0.643 0.622 0.881 0.433 0.723]
+Frequency Weighted Intersection over Union: 0.8224
+Mean Pixel Accuracy: 0.7600
+Mean Intersection over Union(mIoU): 0.5815
+Mean F1 Score: 0.6754
+mIoU (exclude class 0): 0.6344   | mIoU (all): 0.5815
+Epoch time: 162.94s
+
+Training complete! Best mIoU (exclude void): 0.6353
